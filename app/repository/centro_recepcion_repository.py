@@ -6,7 +6,7 @@ class CentroRecepcionRepository():
     def __init__(self):
         self.db = SessionLocal()
 
-    def save(self, id_centro, nombre, direccion, telefono, responsable):
+    def create(self, id_centro, nombre, direccion, telefono, responsable):
         centro = CentroRecepcionORM(
             id_centro=id_centro,
             nombre=nombre,
@@ -21,11 +21,11 @@ class CentroRecepcionRepository():
     def get_all(self):
         return self.db.query(CentroRecepcionORM).all()
 
-    def get_by_id(self, id_centro):
+    def get(self, id_centro):
         return self.db.query(CentroRecepcionORM).filter_by(id_centro=id_centro).first()
 
     def update(self, id_centro, nombre, direccion, telefono, responsable):
-        centro = self.get_by_id(id_centro)
+        centro = self.get(id_centro)
 
         if centro:
             centro.nombre = nombre
@@ -36,7 +36,7 @@ class CentroRecepcionRepository():
         return centro
 
     def delete(self, id_centro):
-        centro = self.get_by_id(id_centro)
+        centro = self.get(id_centro)
 
         if centro:
             self.db.delete(centro)

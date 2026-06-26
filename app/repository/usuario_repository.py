@@ -6,7 +6,7 @@ class UsuarioRepository():
     def __init__(self):
         self.db = SessionLocal()
 
-    def save(self, id_usuario, nombre, correo, contrasena, rol, activo=True):
+    def create(self, id_usuario, nombre, correo, contrasena, rol, activo=True):
         usuario = UsuarioORM(
             id_usuario=id_usuario,
             nombre=nombre,
@@ -22,14 +22,14 @@ class UsuarioRepository():
     def get_all(self):
         return self.db.query(UsuarioORM).all()
 
-    def get_by_id(self, id_usuario):
+    def get(self, id_usuario):
         return self.db.query(UsuarioORM).filter_by(id_usuario=id_usuario).first()
 
     def get_by_correo(self, correo):
         return self.db.query(UsuarioORM).filter_by(correo=correo).first()
 
     def update(self, id_usuario, nombre, correo, contrasena, rol, activo=True):
-        usuario = self.get_by_id(id_usuario)
+        usuario = self.get(id_usuario)
 
         if usuario:
             usuario.nombre = nombre
@@ -41,7 +41,7 @@ class UsuarioRepository():
         return usuario
 
     def delete(self, id_usuario):
-        usuario = self.get_by_id(id_usuario)
+        usuario = self.get(id_usuario)
 
         if usuario:
             self.db.delete(usuario)
