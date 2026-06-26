@@ -6,7 +6,7 @@ class DonacionRepository():
     def __init__(self):
         self.db = SessionLocal()
 
-    def save(self, id_donacion, id_usuario, id_centro, fecha_donacion, estado):
+    def create(self, id_donacion, id_usuario, id_centro, fecha_donacion, estado):
         donacion = DonacionORM(
             id_donacion=id_donacion,
             id_usuario=id_usuario,
@@ -21,10 +21,10 @@ class DonacionRepository():
     def get_all(self):
         return self.db.query(DonacionORM).all()
 
-    def get_by_id(self, id_donacion):
+    def get(self, id_donacion):
         return self.db.query(DonacionORM).filter_by(id_donacion=id_donacion).first()
 
-    def save_detalle(self, id_detalle, id_donacion, id_medicamento, cantidad, fecha_vencimiento, lote, estado_medicamento):
+    def create_detalle(self, id_detalle, id_donacion, id_medicamento, cantidad, fecha_vencimiento, lote, estado_medicamento):
         detalle = DetalleDonacionORM(
             id_detalle=id_detalle,
             id_donacion=id_donacion,
@@ -38,14 +38,14 @@ class DonacionRepository():
         self.db.commit()
         return detalle
 
-    def get_detalle_by_id(self, id_detalle):
+    def get_detalle(self, id_detalle):
         return self.db.query(DetalleDonacionORM).filter_by(id_detalle=id_detalle).first()
 
     def get_detalles_by_donacion(self, id_donacion):
         return self.db.query(DetalleDonacionORM).filter_by(id_donacion=id_donacion).all()
 
     def update(self, id_donacion, id_usuario, id_centro, fecha_donacion, estado):
-        donacion = self.get_by_id(id_donacion)
+        donacion = self.get(id_donacion)
 
         if donacion:
             donacion.id_usuario = id_usuario
@@ -56,7 +56,7 @@ class DonacionRepository():
         return donacion
 
     def update_detalle(self, id_detalle, id_medicamento, cantidad, fecha_vencimiento, lote, estado_medicamento):
-        detalle = self.get_detalle_by_id(id_detalle)
+        detalle = self.get_detalle(id_detalle)
 
         if detalle:
             detalle.id_medicamento = id_medicamento
@@ -68,7 +68,7 @@ class DonacionRepository():
         return detalle
 
     def delete(self, id_donacion):
-        donacion = self.get_by_id(id_donacion)
+        donacion = self.get(id_donacion)
 
         if donacion:
             self.db.delete(donacion)
@@ -76,7 +76,7 @@ class DonacionRepository():
         return donacion
 
     def delete_detalle(self, id_detalle):
-        detalle = self.get_detalle_by_id(id_detalle)
+        detalle = self.get_detalle(id_detalle)
 
         if detalle:
             self.db.delete(detalle)

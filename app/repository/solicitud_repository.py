@@ -6,7 +6,7 @@ class SolicitudRepository():
     def __init__(self):
         self.db = SessionLocal()
 
-    def save(self, id_solicitud, id_usuario, fecha_solicitud, estado, observacion):
+    def create(self, id_solicitud, id_usuario, fecha_solicitud, estado, observacion):
         solicitud = SolicitudORM(
             id_solicitud=id_solicitud,
             id_usuario=id_usuario,
@@ -21,10 +21,10 @@ class SolicitudRepository():
     def get_all(self):
         return self.db.query(SolicitudORM).all()
 
-    def get_by_id(self, id_solicitud):
+    def get(self, id_solicitud):
         return self.db.query(SolicitudORM).filter_by(id_solicitud=id_solicitud).first()
 
-    def save_detalle(self, id_detalle_solicitud, id_solicitud, id_medicamento, cantidad_solicitada, cantidad_aprobada):
+    def create_detalle(self, id_detalle_solicitud, id_solicitud, id_medicamento, cantidad_solicitada, cantidad_aprobada):
         detalle = DetalleSolicitudORM(
             id_detalle_solicitud=id_detalle_solicitud,
             id_solicitud=id_solicitud,
@@ -36,14 +36,14 @@ class SolicitudRepository():
         self.db.commit()
         return detalle
 
-    def get_detalle_by_id(self, id_detalle_solicitud):
+    def get_detalle(self, id_detalle_solicitud):
         return self.db.query(DetalleSolicitudORM).filter_by(id_detalle_solicitud=id_detalle_solicitud).first()
 
     def get_detalles_by_solicitud(self, id_solicitud):
         return self.db.query(DetalleSolicitudORM).filter_by(id_solicitud=id_solicitud).all()
 
     def update(self, id_solicitud, id_usuario, fecha_solicitud, estado, observacion):
-        solicitud = self.get_by_id(id_solicitud)
+        solicitud = self.get(id_solicitud)
 
         if solicitud:
             solicitud.id_usuario = id_usuario
@@ -54,7 +54,7 @@ class SolicitudRepository():
         return solicitud
 
     def update_detalle(self, id_detalle_solicitud, id_medicamento, cantidad_solicitada, cantidad_aprobada):
-        detalle = self.get_detalle_by_id(id_detalle_solicitud)
+        detalle = self.get_detalle(id_detalle_solicitud)
 
         if detalle:
             detalle.id_medicamento = id_medicamento
@@ -64,7 +64,7 @@ class SolicitudRepository():
         return detalle
 
     def delete(self, id_solicitud):
-        solicitud = self.get_by_id(id_solicitud)
+        solicitud = self.get(id_solicitud)
 
         if solicitud:
             self.db.delete(solicitud)
@@ -72,7 +72,7 @@ class SolicitudRepository():
         return solicitud
 
     def delete_detalle(self, id_detalle_solicitud):
-        detalle = self.get_detalle_by_id(id_detalle_solicitud)
+        detalle = self.get_detalle(id_detalle_solicitud)
 
         if detalle:
             self.db.delete(detalle)
