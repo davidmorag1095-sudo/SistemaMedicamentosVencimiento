@@ -9,14 +9,17 @@ service = EntregaService()
 
 @router.post("/", response_model=EntregaSchema)
 def create_entrega(entrega: EntregaSchema):
-    return service.create_entrega(
-        entrega.id_entrega,
-        entrega.id_solicitud,
-        entrega.id_detalle_donacion,
-        entrega.id_usuario,
-        entrega.cantidad_entregada,
-        entrega.fecha_entrega
-    )
+    try:
+        return service.create_entrega(
+            entrega.id_entrega,
+            entrega.id_solicitud,
+            entrega.id_detalle_donacion,
+            entrega.id_usuario,
+            entrega.cantidad_entregada,
+            entrega.fecha_entrega
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
 
 
 @router.get("/{id_entrega}", response_model=EntregaSchema)
@@ -34,14 +37,18 @@ def list_entregas():
 
 @router.put("/{id_entrega}", response_model=EntregaSchema)
 def update_entrega(id_entrega: int, entrega: EntregaSchema):
-    updated = service.update_entrega(
-        id_entrega,
-        entrega.id_solicitud,
-        entrega.id_detalle_donacion,
-        entrega.id_usuario,
-        entrega.cantidad_entregada,
-        entrega.fecha_entrega
-    )
+    try:
+        updated = service.update_entrega(
+            id_entrega,
+            entrega.id_solicitud,
+            entrega.id_detalle_donacion,
+            entrega.id_usuario,
+            entrega.cantidad_entregada,
+            entrega.fecha_entrega
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+
     if not updated:
         raise HTTPException(status_code=404, detail="Entrega no encontrada")
     return updated

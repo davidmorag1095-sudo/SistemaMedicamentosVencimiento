@@ -1,3 +1,5 @@
+from sqlalchemy import func
+
 from app.config.database import SessionLocal
 from app.entity.entrega import EntregaORM
 
@@ -24,6 +26,16 @@ class EntregaRepository():
 
     def get(self, id_entrega):
         return self.db.query(EntregaORM).filter_by(id_entrega=id_entrega).first()
+
+    def get_cantidad_entregada_by_detalle(self, id_detalle_donacion, id_entrega=None):
+        consulta = self.db.query(func.coalesce(func.sum(EntregaORM.cantidad_entregada), 0)).filter_by(
+            id_detalle_donacion=id_detalle_donacion
+        )
+
+        if id_entrega is not None:
+            consulta = consulta.filter(EntregaORM.id_entrega != id_entrega)
+
+        return consulta.scalar()
 
     def update(self, id_entrega, id_solicitud, id_detalle_donacion, id_usuario, cantidad_entregada, fecha_entrega):
         entrega = self.get(id_entrega)
