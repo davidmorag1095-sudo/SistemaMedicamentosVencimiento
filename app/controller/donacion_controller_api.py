@@ -9,13 +9,16 @@ service = DonacionService()
 
 @router.post("/", response_model=DonacionSchema)
 def create_donacion(donacion: DonacionSchema):
-    return service.create_donacion(
-        donacion.id_donacion,
-        donacion.id_usuario,
-        donacion.id_centro,
-        donacion.fecha_donacion,
-        donacion.estado
-    )
+    try:
+        return service.create_donacion(
+            donacion.id_donacion,
+            donacion.id_usuario,
+            donacion.id_centro,
+            donacion.fecha_donacion,
+            donacion.estado
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
 
 
 @router.get("/{id_donacion}", response_model=DonacionSchema)
@@ -33,13 +36,17 @@ def list_donaciones():
 
 @router.put("/{id_donacion}", response_model=DonacionSchema)
 def update_donacion(id_donacion: int, donacion: DonacionSchema):
-    updated = service.update_donacion(
-        id_donacion,
-        donacion.id_usuario,
-        donacion.id_centro,
-        donacion.fecha_donacion,
-        donacion.estado
-    )
+    try:
+        updated = service.update_donacion(
+            id_donacion,
+            donacion.id_usuario,
+            donacion.id_centro,
+            donacion.fecha_donacion,
+            donacion.estado
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+
     if not updated:
         raise HTTPException(status_code=404, detail="Donacion no encontrada")
     return updated
@@ -55,15 +62,18 @@ def delete_donacion(id_donacion: int):
 
 @router.post("/detalles/", response_model=DetalleDonacionSchema)
 def create_detalle_donacion(detalle: DetalleDonacionSchema):
-    return service.create_detalle_donacion(
-        detalle.id_detalle,
-        detalle.id_donacion,
-        detalle.id_medicamento,
-        detalle.cantidad,
-        detalle.fecha_vencimiento,
-        detalle.lote,
-        detalle.estado_medicamento
-    )
+    try:
+        return service.create_detalle_donacion(
+            detalle.id_detalle,
+            detalle.id_donacion,
+            detalle.id_medicamento,
+            detalle.cantidad,
+            detalle.fecha_vencimiento,
+            detalle.lote,
+            detalle.estado_medicamento
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
 
 
 @router.get("/detalles/{id_detalle}", response_model=DetalleDonacionSchema)
@@ -81,14 +91,18 @@ def list_detalles_donacion(id_donacion: int):
 
 @router.put("/detalles/{id_detalle}", response_model=DetalleDonacionSchema)
 def update_detalle_donacion(id_detalle: int, detalle: DetalleDonacionSchema):
-    updated = service.update_detalle_donacion(
-        id_detalle,
-        detalle.id_medicamento,
-        detalle.cantidad,
-        detalle.fecha_vencimiento,
-        detalle.lote,
-        detalle.estado_medicamento
-    )
+    try:
+        updated = service.update_detalle_donacion(
+            id_detalle,
+            detalle.id_medicamento,
+            detalle.cantidad,
+            detalle.fecha_vencimiento,
+            detalle.lote,
+            detalle.estado_medicamento
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+
     if not updated:
         raise HTTPException(status_code=404, detail="Detalle no encontrado")
     return updated
