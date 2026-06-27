@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import Column, Date, DateTime, ForeignKey, Integer, String
 
-from app.config.database import Base
+from config.database import Base
 
 
 class DonacionORM(Base):

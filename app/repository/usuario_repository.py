@@ -1,5 +1,5 @@
-from app.config.database import SessionLocal
-from app.entity.usuario import UsuarioORM
+from config.database import SessionLocal
+from entity.usuario import UsuarioORM
 
 
 class UsuarioRepository():

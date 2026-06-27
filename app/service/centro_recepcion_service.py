@@ -1,4 +1,4 @@
-from app.repository.centro_recepcion_repository import CentroRecepcionRepository
+from repository.centro_recepcion_repository import CentroRecepcionRepository
 
 
 class CentroRecepcionService:

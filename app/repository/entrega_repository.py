@@ -1,7 +1,7 @@
 from sqlalchemy import func
 
-from app.config.database import SessionLocal
-from app.entity.entrega import EntregaORM
+from config.database import SessionLocal
+from entity.entrega import EntregaORM
 
 
 class EntregaRepository():

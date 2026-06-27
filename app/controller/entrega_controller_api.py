@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
-from app.schemas.entrega_schema import EntregaSchema
-from app.service.entrega_service import EntregaService
+from schemas.entrega_schema import EntregaSchema
+from service.entrega_service import EntregaService
 
 router = APIRouter(prefix="/entregas", tags=["Entregas"])
 service = EntregaService()

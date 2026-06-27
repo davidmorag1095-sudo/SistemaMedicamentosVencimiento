@@ -1,5 +1,5 @@
-from app.config.database import SessionLocal
-from app.entity.donacion import DonacionORM, DetalleDonacionORM
+from config.database import SessionLocal
+from entity.donacion import DonacionORM, DetalleDonacionORM
 
 
 class DonacionRepository():

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 
-from app.config.database import Base
+from config.database import Base
 
 
 class CentroRecepcionORM(Base):

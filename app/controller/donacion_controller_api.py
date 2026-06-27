@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
-from app.schemas.donacion_schema import DonacionSchema, DetalleDonacionSchema
-from app.service.donacion_service import DonacionService
+from schemas.donacion_schema import DonacionSchema, DetalleDonacionSchema
+from service.donacion_service import DonacionService
 
 router = APIRouter(prefix="/donaciones", tags=["Donaciones"])
 service = DonacionService()

@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import Column, DateTime, ForeignKey, Integer
 
-from app.config.database import Base
+from config.database import Base
 
 
 class EntregaORM(Base):

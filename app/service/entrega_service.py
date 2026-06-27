@@ -1,9 +1,9 @@
 from datetime import date, datetime
 
-from app.repository.donacion_repository import DonacionRepository
-from app.repository.entrega_repository import EntregaRepository
-from app.repository.solicitud_repository import SolicitudRepository
-from app.repository.usuario_repository import UsuarioRepository
+from repository.donacion_repository import DonacionRepository
+from repository.entrega_repository import EntregaRepository
+from repository.solicitud_repository import SolicitudRepository
+from repository.usuario_repository import UsuarioRepository
 
 
 class EntregaService:

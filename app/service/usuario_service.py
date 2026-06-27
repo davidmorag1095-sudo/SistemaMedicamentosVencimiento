@@ -1,4 +1,4 @@
-from app.repository.usuario_repository import UsuarioRepository
+from repository.usuario_repository import UsuarioRepository
 
 
 class UsuarioService:

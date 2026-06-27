@@ -1,5 +1,5 @@
-from app.config.database import SessionLocal
-from app.entity.centro_recepcion import CentroRecepcionORM
+from config.database import SessionLocal
+from entity.centro_recepcion import CentroRecepcionORM
 
 
 class CentroRecepcionRepository():

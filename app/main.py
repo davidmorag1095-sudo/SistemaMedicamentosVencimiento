@@ -1,13 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.config.database import init_db
-from app.controller.centro_recepcion_controller_api import router as centro_router
-from app.controller.donacion_controller_api import router as donacion_router
-from app.controller.entrega_controller_api import router as entrega_router
-from app.controller.medicamento_controller_api import router as medicamento_router
-from app.controller.solicitud_controller_api import router as solicitud_router
-from app.controller.usuario_controller_api import router as usuario_router
+from config.database import init_db
+from controller.centro_recepcion_controller_api import router as centro_router
+from controller.donacion_controller_api import router as donacion_router
+from controller.entrega_controller_api import router as entrega_router
+from controller.medicamento_controller_api import router as medicamento_router
+from controller.solicitud_controller_api import router as solicitud_router
+from controller.usuario_controller_api import router as usuario_router
 
 app = FastAPI(title="Sistema Medicamentos API")
 

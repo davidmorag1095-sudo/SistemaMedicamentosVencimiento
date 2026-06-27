@@ -1,9 +1,9 @@
 from datetime import date, datetime
 
-from app.repository.centro_recepcion_repository import CentroRecepcionRepository
-from app.repository.donacion_repository import DonacionRepository
-from app.repository.medicamento_repository import MedicamentoRepository
-from app.repository.usuario_repository import UsuarioRepository
+from repository.centro_recepcion_repository import CentroRecepcionRepository
+from repository.donacion_repository import DonacionRepository
+from repository.medicamento_repository import MedicamentoRepository
+from repository.usuario_repository import UsuarioRepository
 
 
 class DonacionService:

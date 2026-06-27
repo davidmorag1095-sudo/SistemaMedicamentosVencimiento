@@ -1,5 +1,5 @@
-from app.config.database import SessionLocal
-from app.entity.solicitud import SolicitudORM, DetalleSolicitudORM
+from config.database import SessionLocal
+from entity.solicitud import SolicitudORM, DetalleSolicitudORM
 
 
 class SolicitudRepository():

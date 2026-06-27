@@ -1,5 +1,5 @@
-from app.config.database import SessionLocal
-from app.entity.medicamento import MedicamentoORM
+from config.database import SessionLocal
+from entity.medicamento import MedicamentoORM
 
 
 class MedicamentoRepository():

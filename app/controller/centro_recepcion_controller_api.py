@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
-from app.schemas.centro_recepcion_schema import CentroRecepcionSchema
-from app.service.centro_recepcion_service import CentroRecepcionService
+from schemas.centro_recepcion_schema import CentroRecepcionSchema
+from service.centro_recepcion_service import CentroRecepcionService
 
 router = APIRouter(prefix="/centros", tags=["Centros"])
 service = CentroRecepcionService()

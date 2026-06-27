@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
-from app.schemas.medicamento_schema import MedicamentoSchema
-from app.service.medicamento_service import MedicamentoService
+from schemas.medicamento_schema import MedicamentoSchema
+from service.medicamento_service import MedicamentoService
 
 router = APIRouter(prefix="/medicamentos", tags=["Medicamentos"])
 service = MedicamentoService()

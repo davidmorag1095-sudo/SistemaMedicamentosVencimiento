@@ -1,6 +1,6 @@
-from app.repository.medicamento_repository import MedicamentoRepository
-from app.repository.solicitud_repository import SolicitudRepository
-from app.repository.usuario_repository import UsuarioRepository
+from repository.medicamento_repository import MedicamentoRepository
+from repository.solicitud_repository import SolicitudRepository
+from repository.usuario_repository import UsuarioRepository
 
 
 class SolicitudService:

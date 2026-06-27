@@ -9,11 +9,11 @@ Base = declarative_base()
 
 
 def init_db():
-    from app.entity.usuario import UsuarioORM
-    from app.entity.centro_recepcion import CentroRecepcionORM
-    from app.entity.medicamento import MedicamentoORM
-    from app.entity.donacion import DonacionORM, DetalleDonacionORM
-    from app.entity.solicitud import SolicitudORM, DetalleSolicitudORM
-    from app.entity.entrega import EntregaORM
+    from entity.usuario import UsuarioORM
+    from entity.centro_recepcion import CentroRecepcionORM
+    from entity.medicamento import MedicamentoORM
+    from entity.donacion import DonacionORM, DetalleDonacionORM
+    from entity.solicitud import SolicitudORM, DetalleSolicitudORM
+    from entity.entrega import EntregaORM
 
     Base.metadata.create_all(engine)

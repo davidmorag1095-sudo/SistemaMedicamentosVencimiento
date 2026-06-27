@@ -1,4 +1,4 @@
-from app.repository.medicamento_repository import MedicamentoRepository
+from repository.medicamento_repository import MedicamentoRepository
 
 
 class MedicamentoService:

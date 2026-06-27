@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
-from app.schemas.solicitud_schema import SolicitudSchema, DetalleSolicitudSchema
-from app.service.solicitud_service import SolicitudService
+from schemas.solicitud_schema import SolicitudSchema, DetalleSolicitudSchema
+from service.solicitud_service import SolicitudService
 
 router = APIRouter(prefix="/solicitudes", tags=["Solicitudes"])
 service = SolicitudService()
