@@ -9,14 +9,17 @@ service = MedicamentoService()
 
 @router.post("/", response_model=MedicamentoSchema)
 def create_medicamento(medicamento: MedicamentoSchema):
-    return service.create_medicamento(
-        medicamento.id_medicamento,
-        medicamento.nombre,
-        medicamento.descripcion,
-        medicamento.categoria,
-        medicamento.presentacion,
-        medicamento.requiere_receta
-    )
+    try:
+        return service.create_medicamento(
+            medicamento.id_medicamento,
+            medicamento.nombre,
+            medicamento.descripcion,
+            medicamento.categoria,
+            medicamento.presentacion,
+            medicamento.requiere_receta
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
 
 
 @router.get("/{id_medicamento}", response_model=MedicamentoSchema)
@@ -34,14 +37,18 @@ def list_medicamentos():
 
 @router.put("/{id_medicamento}", response_model=MedicamentoSchema)
 def update_medicamento(id_medicamento: int, medicamento: MedicamentoSchema):
-    updated = service.update_medicamento(
-        id_medicamento,
-        medicamento.nombre,
-        medicamento.descripcion,
-        medicamento.categoria,
-        medicamento.presentacion,
-        medicamento.requiere_receta
-    )
+    try:
+        updated = service.update_medicamento(
+            id_medicamento,
+            medicamento.nombre,
+            medicamento.descripcion,
+            medicamento.categoria,
+            medicamento.presentacion,
+            medicamento.requiere_receta
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+
     if not updated:
         raise HTTPException(status_code=404, detail="Medicamento no encontrado")
     return updated

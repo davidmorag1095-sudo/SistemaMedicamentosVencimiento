@@ -29,12 +29,34 @@ def leer_requiere_receta():
     return respuesta == "s"
 
 
+def leer_opcion(titulo, opciones):
+    print(f"\n{titulo}")
+
+    for indice, opcion in enumerate(opciones, start=1):
+        print(f"{indice}. {opcion}")
+
+    seleccion = int(input("Seleccione una opcion: "))
+
+    if seleccion < 1 or seleccion > len(opciones):
+        raise ValueError("Opcion invalida")
+
+    return opciones[seleccion - 1]
+
+
+def leer_categoria(service):
+    return leer_opcion("Categorias", service.get_categorias())
+
+
+def leer_presentacion(service):
+    return leer_opcion("Presentaciones", service.get_presentaciones())
+
+
 def agregar_medicamento(service):
     id_medicamento = int(input("Id medicamento: "))
     nombre = input("Nombre: ")
     descripcion = input("Descripcion: ")
-    categoria = input("Categoria: ")
-    presentacion = input("Presentacion: ")
+    categoria = leer_categoria(service)
+    presentacion = leer_presentacion(service)
     requiere_receta = leer_requiere_receta()
 
     service.create_medicamento(
@@ -70,8 +92,8 @@ def actualizar_medicamento(service):
     id_medicamento = int(input("Id medicamento: "))
     nombre = input("Nuevo nombre: ")
     descripcion = input("Nueva descripcion: ")
-    categoria = input("Nueva categoria: ")
-    presentacion = input("Nueva presentacion: ")
+    categoria = leer_categoria(service)
+    presentacion = leer_presentacion(service)
     requiere_receta = leer_requiere_receta()
 
     medicamento = service.update_medicamento(

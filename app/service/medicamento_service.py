@@ -1,12 +1,38 @@
 from repository.medicamento_repository import MedicamentoRepository
 
+CATEGORIAS_MEDICAMENTO = [
+    "Analgesico",
+    "Antibiotico",
+    "Antialergico"
+]
+
+PRESENTACIONES_MEDICAMENTO = [
+    "Tabletas",
+    "Jarabe",
+    "Inyectable"
+]
+
 
 class MedicamentoService:
 
     def __init__(self):
         self.repo = MedicamentoRepository()
 
+    def get_categorias(self):
+        return CATEGORIAS_MEDICAMENTO
+
+    def get_presentaciones(self):
+        return PRESENTACIONES_MEDICAMENTO
+
+    def validar_categoria_presentacion(self, categoria, presentacion):
+        if categoria not in CATEGORIAS_MEDICAMENTO:
+            raise ValueError("Categoria no permitida")
+
+        if presentacion not in PRESENTACIONES_MEDICAMENTO:
+            raise ValueError("Presentacion no permitida")
+
     def create_medicamento(self, id_medicamento, nombre, descripcion, categoria, presentacion, requiere_receta=False):
+        self.validar_categoria_presentacion(categoria, presentacion)
         return self.repo.create(id_medicamento, nombre, descripcion, categoria, presentacion, requiere_receta)
 
     def get_medicamento(self, id_medicamento):
@@ -16,6 +42,7 @@ class MedicamentoService:
         return self.repo.get_all()
 
     def update_medicamento(self, id_medicamento, nombre, descripcion, categoria, presentacion, requiere_receta=False):
+        self.validar_categoria_presentacion(categoria, presentacion)
         return self.repo.update(id_medicamento, nombre, descripcion, categoria, presentacion, requiere_receta)
 
     def delete_medicamento(self, id_medicamento):
