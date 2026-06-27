@@ -9,13 +9,16 @@ service = SolicitudService()
 
 @router.post("/", response_model=SolicitudSchema)
 def create_solicitud(solicitud: SolicitudSchema):
-    return service.create_solicitud(
-        solicitud.id_solicitud,
-        solicitud.id_usuario,
-        solicitud.fecha_solicitud,
-        solicitud.estado,
-        solicitud.observacion
-    )
+    try:
+        return service.create_solicitud(
+            solicitud.id_solicitud,
+            solicitud.id_usuario,
+            solicitud.fecha_solicitud,
+            solicitud.estado,
+            solicitud.observacion
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
 
 
 @router.get("/{id_solicitud}", response_model=SolicitudSchema)
@@ -33,13 +36,17 @@ def list_solicitudes():
 
 @router.put("/{id_solicitud}", response_model=SolicitudSchema)
 def update_solicitud(id_solicitud: int, solicitud: SolicitudSchema):
-    updated = service.update_solicitud(
-        id_solicitud,
-        solicitud.id_usuario,
-        solicitud.fecha_solicitud,
-        solicitud.estado,
-        solicitud.observacion
-    )
+    try:
+        updated = service.update_solicitud(
+            id_solicitud,
+            solicitud.id_usuario,
+            solicitud.fecha_solicitud,
+            solicitud.estado,
+            solicitud.observacion
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+
     if not updated:
         raise HTTPException(status_code=404, detail="Solicitud no encontrada")
     return updated
@@ -55,13 +62,16 @@ def delete_solicitud(id_solicitud: int):
 
 @router.post("/detalles/", response_model=DetalleSolicitudSchema)
 def create_detalle_solicitud(detalle: DetalleSolicitudSchema):
-    return service.create_detalle_solicitud(
-        detalle.id_detalle_solicitud,
-        detalle.id_solicitud,
-        detalle.id_medicamento,
-        detalle.cantidad_solicitada,
-        detalle.cantidad_aprobada
-    )
+    try:
+        return service.create_detalle_solicitud(
+            detalle.id_detalle_solicitud,
+            detalle.id_solicitud,
+            detalle.id_medicamento,
+            detalle.cantidad_solicitada,
+            detalle.cantidad_aprobada
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
 
 
 @router.get("/detalles/{id_detalle_solicitud}", response_model=DetalleSolicitudSchema)
@@ -79,12 +89,16 @@ def list_detalles_solicitud(id_solicitud: int):
 
 @router.put("/detalles/{id_detalle_solicitud}", response_model=DetalleSolicitudSchema)
 def update_detalle_solicitud(id_detalle_solicitud: int, detalle: DetalleSolicitudSchema):
-    updated = service.update_detalle_solicitud(
-        id_detalle_solicitud,
-        detalle.id_medicamento,
-        detalle.cantidad_solicitada,
-        detalle.cantidad_aprobada
-    )
+    try:
+        updated = service.update_detalle_solicitud(
+            id_detalle_solicitud,
+            detalle.id_medicamento,
+            detalle.cantidad_solicitada,
+            detalle.cantidad_aprobada
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+
     if not updated:
         raise HTTPException(status_code=404, detail="Detalle no encontrado")
     return updated
