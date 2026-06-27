@@ -1,0 +1,80 @@
+classDiagram
+    class UsuarioORM {
+        int id_usuario
+        string nombre
+        string correo
+        string contrasena
+        string rol
+        bool activo
+    }
+
+    class CentroRecepcionORM {
+        int id_centro
+        string nombre
+        string direccion
+        string telefono
+        string responsable
+    }
+
+    class MedicamentoORM {
+        int id_medicamento
+        string nombre
+        string descripcion
+        string categoria
+        string presentacion
+        bool requiere_receta
+    }
+
+    class DonacionORM {
+        int id_donacion
+        int id_usuario
+        int id_centro
+        datetime fecha_donacion
+        string estado
+    }
+
+    class DetalleDonacionORM {
+        int id_detalle
+        int id_donacion
+        int id_medicamento
+        int cantidad
+        date fecha_vencimiento
+        string lote
+        string estado_medicamento
+    }
+
+    class SolicitudORM {
+        int id_solicitud
+        int id_usuario
+        datetime fecha_solicitud
+        string estado
+        string observacion
+    }
+
+    class DetalleSolicitudORM {
+        int id_detalle_solicitud
+        int id_solicitud
+        int id_medicamento
+        int cantidad_solicitada
+        int cantidad_aprobada
+    }
+
+    class EntregaORM {
+        int id_entrega
+        int id_solicitud
+        int id_detalle_donacion
+        int id_usuario
+        int cantidad_entregada
+        datetime fecha_entrega
+    }
+
+    UsuarioORM "1" --> "0..*" DonacionORM
+    UsuarioORM "1" --> "0..*" SolicitudORM
+    UsuarioORM "1" --> "0..*" EntregaORM
+    CentroRecepcionORM "1" --> "0..*" DonacionORM
+    DonacionORM "1" --> "1..*" DetalleDonacionORM
+    MedicamentoORM "1" --> "0..*" DetalleDonacionORM
+    SolicitudORM "1" --> "1..*" DetalleSolicitudORM
+    MedicamentoORM "1" --> "0..*" DetalleSolicitudORM
+    SolicitudORM "1" --> "0..*" EntregaORM
+    DetalleDonacionORM "1" --> "0..*" EntregaORM

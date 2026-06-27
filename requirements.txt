@@ -1,5 +1,5 @@
 SQLAlchemy
 PyMySQL
 fastapi
-uvicorn
+uvicorn[standard]
 pydantic
