@@ -38,6 +38,9 @@ class EntregaService:
 #--------------------------------------------------------------------------------------------------------------
 
     def validar_entrega(self, id_entrega, id_solicitud, id_detalle_donacion, id_usuario, cantidad_entregada):
+        if id_entrega is not None and not self.repo.get(id_entrega):
+            raise ValueError("Entrega no encontrada")
+
         solicitud = self.solicitud_repo.get(id_solicitud)
         detalle_donacion = self.donacion_repo.get_detalle(id_detalle_donacion)
 
