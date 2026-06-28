@@ -9,14 +9,17 @@ service = UsuarioService()
 
 @router.post("/", response_model=UsuarioSchema)
 def create_usuario(usuario: UsuarioSchema):
-    return service.create_usuario(
-        usuario.id_usuario,
-        usuario.nombre,
-        usuario.correo,
-        usuario.contrasena,
-        usuario.rol,
-        usuario.activo
-    )
+    try:
+        return service.create_usuario(
+            usuario.id_usuario,
+            usuario.nombre,
+            usuario.correo,
+            usuario.contrasena,
+            usuario.rol,
+            usuario.activo
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
 
 
 @router.get("/{id_usuario}", response_model=UsuarioSchema)
@@ -34,14 +37,18 @@ def list_usuarios():
 
 @router.put("/{id_usuario}", response_model=UsuarioSchema)
 def update_usuario(id_usuario: int, usuario: UsuarioSchema):
-    updated = service.update_usuario(
-        id_usuario,
-        usuario.nombre,
-        usuario.correo,
-        usuario.contrasena,
-        usuario.rol,
-        usuario.activo
-    )
+    try:
+        updated = service.update_usuario(
+            id_usuario,
+            usuario.nombre,
+            usuario.correo,
+            usuario.contrasena,
+            usuario.rol,
+            usuario.activo
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+
     if not updated:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
     return updated

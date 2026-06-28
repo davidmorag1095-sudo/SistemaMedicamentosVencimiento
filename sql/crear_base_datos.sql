@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS donaciones (
     id_usuario INT NOT NULL,
     id_centro INT NOT NULL,
     fecha_donacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    estado VARCHAR(30) DEFAULT 'registrada',
+    estado VARCHAR(30) DEFAULT 'en proceso',
     CONSTRAINT fk_donaciones_usuarios
         FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
     CONSTRAINT fk_donaciones_centros

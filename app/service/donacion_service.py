@@ -5,6 +5,12 @@ from repository.donacion_repository import DonacionRepository
 from repository.medicamento_repository import MedicamentoRepository
 from repository.usuario_repository import UsuarioRepository
 
+ESTADOS_DONACION = [
+    "aprobada",
+    "en proceso",
+    "denegada"
+]
+
 
 class DonacionService:
 
@@ -14,8 +20,11 @@ class DonacionService:
         self.centro_repo = CentroRecepcionRepository()
         self.medicamento_repo = MedicamentoRepository()
 
+    def get_estados_donacion(self):
+        return ESTADOS_DONACION
+
     def create_donacion(self, id_donacion, id_usuario, id_centro, fecha_donacion, estado):
-        self.validar_donacion(id_usuario, id_centro)
+        self.validar_donacion(id_usuario, id_centro, estado)
         return self.repo.create(id_donacion, id_usuario, id_centro, fecha_donacion, estado)
 
     def get_donacion(self, id_donacion):
@@ -25,7 +34,7 @@ class DonacionService:
         return self.repo.get_all()
 
     def update_donacion(self, id_donacion, id_usuario, id_centro, fecha_donacion, estado):
-        self.validar_donacion(id_usuario, id_centro)
+        self.validar_donacion(id_usuario, id_centro, estado)
         return self.repo.update(id_donacion, id_usuario, id_centro, fecha_donacion, estado)
 
     def delete_donacion(self, id_donacion):
@@ -53,12 +62,15 @@ class DonacionService:
     def delete_detalle_donacion(self, id_detalle):
         return self.repo.delete_detalle(id_detalle)
 
-    def validar_donacion(self, id_usuario, id_centro):
+    def validar_donacion(self, id_usuario, id_centro, estado):
         if not self.usuario_repo.get(id_usuario):
             raise ValueError("Usuario no encontrado")
 
         if not self.centro_repo.get(id_centro):
             raise ValueError("Centro de recepcion no encontrado")
+
+        if estado not in ESTADOS_DONACION:
+            raise ValueError("Estado de donacion no valido")
 
     def validar_detalle_donacion(self, id_donacion, id_medicamento, cantidad, fecha_vencimiento, estado_medicamento):
         estados_validos = ["disponible", "entregado", "vencido", "descartado"]

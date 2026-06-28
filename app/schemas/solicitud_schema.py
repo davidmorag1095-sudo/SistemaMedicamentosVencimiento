@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict
 
 
 class SolicitudSchema(BaseModel):
-    id_solicitud: int
+    id_solicitud: int | None = None
     id_usuario: int
     fecha_solicitud: datetime
     estado: str
@@ -14,7 +14,7 @@ class SolicitudSchema(BaseModel):
 
 
 class DetalleSolicitudSchema(BaseModel):
-    id_detalle_solicitud: int
+    id_detalle_solicitud: int | None = None
     id_solicitud: int
     id_medicamento: int
     cantidad_solicitada: int

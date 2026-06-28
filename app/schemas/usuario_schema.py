@@ -2,7 +2,7 @@ from pydantic import BaseModel, ConfigDict
 
 
 class UsuarioSchema(BaseModel):
-    id_usuario: int
+    id_usuario: int | None = None
     nombre: str
     correo: str
     contrasena: str

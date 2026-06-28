@@ -40,17 +40,40 @@ def leer_texto_default(mensaje, valor_default):
 
 
 def leer_fecha(mensaje):
-    valor = input(f"{mensaje} (YYYY-MM-DD): ").strip()
-    return date.fromisoformat(valor)
+    while True:
+        valor = input(f"{mensaje} (YYYY-MM-DD): ").strip()
+
+        try:
+            return date.fromisoformat(valor)
+        except ValueError:
+            print("Formato incorrecto. Ejemplo: 2026-06-28")
 
 
 def leer_fecha_hora(mensaje):
-    valor = input(f"{mensaje} (YYYY-MM-DD HH:MM, enter para ahora): ").strip()
+    while True:
+        valor = input(f"{mensaje} (enter para ahora): ").strip()
 
-    if valor == "":
-        return datetime.now()
+        if valor == "":
+            return datetime.now()
 
-    return datetime.strptime(valor, "%Y-%m-%d %H:%M")
+        formatos = [
+            "%Y-%m-%d %H:%M",
+            "%Y-%m-%dT%H:%M",
+            "%Y-%m-%d"
+        ]
+
+        for formato in formatos:
+            try:
+                fecha = datetime.strptime(valor, formato)
+
+                if formato == "%Y-%m-%d":
+                    return datetime(fecha.year, fecha.month, fecha.day)
+
+                return fecha
+            except ValueError:
+                pass
+
+        print("Formato incorrecto. Ejemplos: 2026-06-28 14:30 o 2026-06-28")
 
 
 def leer_si_no(mensaje):
@@ -84,16 +107,19 @@ def mostrar_usuario(usuario):
         print("No se encontro el usuario")
 
 
+def leer_rol(service):
+    return leer_opcion("Roles", service.get_roles())
+
+
 def agregar_usuario(service):
-    id_usuario = int(input("Id usuario: "))
     nombre = input("Nombre: ")
     correo = input("Correo: ")
     contrasena = input("Contrasena: ")
-    rol = input("Rol: ")
+    rol = leer_rol(service)
     activo = leer_si_no("Activo?")
 
-    service.create_usuario(id_usuario, nombre, correo, contrasena, rol, activo)
-    print("Usuario agregado correctamente")
+    usuario = service.create_usuario(None, nombre, correo, contrasena, rol, activo)
+    print(f"Usuario agregado correctamente. El ID del usuario es {usuario.id_usuario}")
 
 
 def buscar_usuario(service):
@@ -118,7 +144,7 @@ def actualizar_usuario(service):
     nombre = input("Nuevo nombre: ")
     correo = input("Nuevo correo: ")
     contrasena = input("Nueva contrasena: ")
-    rol = input("Nuevo rol: ")
+    rol = leer_rol(service)
     activo = leer_si_no("Activo?")
 
     usuario = service.update_usuario(id_usuario, nombre, correo, contrasena, rol, activo)
@@ -178,15 +204,18 @@ def mostrar_centro(centro):
         print("No se encontro el centro")
 
 
+def leer_nombre_centro(service):
+    return leer_opcion("Centros disponibles", service.get_nombres_centro())
+
+
 def agregar_centro(service):
-    id_centro = int(input("Id centro: "))
-    nombre = input("Nombre: ")
+    nombre = leer_nombre_centro(service)
     direccion = input("Direccion: ")
     telefono = input("Telefono: ")
     responsable = input("Responsable: ")
 
-    service.create_centro(id_centro, nombre, direccion, telefono, responsable)
-    print("Centro agregado correctamente")
+    centro = service.create_centro(None, nombre, direccion, telefono, responsable)
+    print(f"Centro agregado correctamente. El ID del centro es {centro.id_centro}")
 
 
 def buscar_centro(service):
@@ -208,7 +237,7 @@ def listar_centros(service):
 
 def actualizar_centro(service):
     id_centro = int(input("Id centro: "))
-    nombre = input("Nuevo nombre: ")
+    nombre = leer_nombre_centro(service)
     direccion = input("Nueva direccion: ")
     telefono = input("Nuevo telefono: ")
     responsable = input("Nuevo responsable: ")
@@ -280,22 +309,21 @@ def leer_presentacion(service):
 
 
 def agregar_medicamento(service):
-    id_medicamento = int(input("Id medicamento: "))
     nombre = input("Nombre: ")
     descripcion = input("Descripcion: ")
     categoria = leer_categoria(service)
     presentacion = leer_presentacion(service)
     requiere_receta = leer_si_no("Requiere receta?")
 
-    service.create_medicamento(
-        id_medicamento,
+    medicamento = service.create_medicamento(
+        None,
         nombre,
         descripcion,
         categoria,
         presentacion,
         requiere_receta
     )
-    print("Medicamento agregado correctamente")
+    print(f"Medicamento agregado correctamente. El ID del medicamento es {medicamento.id_medicamento}")
 
 
 def buscar_medicamento(service):
@@ -406,15 +434,18 @@ def leer_estado_medicamento():
     return leer_opcion("Estados de medicamento", estados)
 
 
+def leer_estado_donacion(service):
+    return leer_opcion("Estados de donacion", service.get_estados_donacion())
+
+
 def agregar_donacion(service):
-    id_donacion = int(input("Id donacion: "))
     id_usuario = int(input("Id usuario: "))
     id_centro = int(input("Id centro: "))
     fecha_donacion = leer_fecha_hora("Fecha de donacion")
-    estado = leer_texto_default("Estado", "registrada")
+    estado = leer_estado_donacion(service)
 
-    service.create_donacion(id_donacion, id_usuario, id_centro, fecha_donacion, estado)
-    print("Donacion agregada correctamente")
+    donacion = service.create_donacion(None, id_usuario, id_centro, fecha_donacion, estado)
+    print(f"Donacion agregada correctamente. El ID de la donacion es {donacion.id_donacion}")
 
 
 def buscar_donacion(service):
@@ -439,7 +470,7 @@ def actualizar_donacion(service):
     id_usuario = int(input("Id usuario: "))
     id_centro = int(input("Id centro: "))
     fecha_donacion = leer_fecha_hora("Nueva fecha de donacion")
-    estado = leer_texto_default("Estado", "registrada")
+    estado = leer_estado_donacion(service)
 
     donacion = service.update_donacion(id_donacion, id_usuario, id_centro, fecha_donacion, estado)
 
@@ -460,7 +491,6 @@ def eliminar_donacion(service):
 
 
 def agregar_detalle_donacion(service):
-    id_detalle = int(input("Id detalle: "))
     id_donacion = int(input("Id donacion: "))
     id_medicamento = int(input("Id medicamento: "))
     cantidad = int(input("Cantidad: "))
@@ -468,8 +498,8 @@ def agregar_detalle_donacion(service):
     lote = input("Lote: ")
     estado_medicamento = leer_estado_medicamento()
 
-    service.create_detalle_donacion(
-        id_detalle,
+    detalle = service.create_detalle_donacion(
+        None,
         id_donacion,
         id_medicamento,
         cantidad,
@@ -477,7 +507,7 @@ def agregar_detalle_donacion(service):
         lote,
         estado_medicamento
     )
-    print("Detalle de donacion agregado correctamente")
+    print(f"Detalle de donacion agregado correctamente. El ID del detalle es {detalle.id_detalle}")
 
 
 def buscar_detalle_donacion(service):
@@ -602,14 +632,13 @@ def leer_estado_solicitud():
 
 
 def agregar_solicitud(service):
-    id_solicitud = int(input("Id solicitud: "))
     id_usuario = int(input("Id usuario: "))
     fecha_solicitud = leer_fecha_hora("Fecha de solicitud")
     estado = leer_estado_solicitud()
     observacion = input("Observacion: ")
 
-    service.create_solicitud(id_solicitud, id_usuario, fecha_solicitud, estado, observacion)
-    print("Solicitud agregada correctamente")
+    solicitud = service.create_solicitud(None, id_usuario, fecha_solicitud, estado, observacion)
+    print(f"Solicitud agregada correctamente. El ID de la solicitud es {solicitud.id_solicitud}")
 
 
 def buscar_solicitud(service):
@@ -655,20 +684,22 @@ def eliminar_solicitud(service):
 
 
 def agregar_detalle_solicitud(service):
-    id_detalle_solicitud = int(input("Id detalle solicitud: "))
     id_solicitud = int(input("Id solicitud: "))
     id_medicamento = int(input("Id medicamento: "))
     cantidad_solicitada = int(input("Cantidad solicitada: "))
     cantidad_aprobada = int(input("Cantidad aprobada: "))
 
-    service.create_detalle_solicitud(
-        id_detalle_solicitud,
+    detalle = service.create_detalle_solicitud(
+        None,
         id_solicitud,
         id_medicamento,
         cantidad_solicitada,
         cantidad_aprobada
     )
-    print("Detalle de solicitud agregado correctamente")
+    print(
+        "Detalle de solicitud agregado correctamente. "
+        f"El ID del detalle es {detalle.id_detalle_solicitud}"
+    )
 
 
 def buscar_detalle_solicitud(service):
@@ -774,22 +805,21 @@ def mostrar_entrega(entrega):
 
 
 def agregar_entrega(service):
-    id_entrega = int(input("Id entrega: "))
     id_solicitud = int(input("Id solicitud: "))
     id_detalle_donacion = int(input("Id detalle donacion: "))
     id_usuario = int(input("Id usuario: "))
     cantidad_entregada = int(input("Cantidad entregada: "))
     fecha_entrega = leer_fecha_hora("Fecha de entrega")
 
-    service.create_entrega(
-        id_entrega,
+    entrega = service.create_entrega(
+        None,
         id_solicitud,
         id_detalle_donacion,
         id_usuario,
         cantidad_entregada,
         fecha_entrega
     )
-    print("Entrega agregada correctamente")
+    print(f"Entrega agregada correctamente. El ID de la entrega es {entrega.id_entrega}")
 
 
 def buscar_entrega(service):

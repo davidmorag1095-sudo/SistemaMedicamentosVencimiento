@@ -2,7 +2,7 @@ from pydantic import BaseModel, ConfigDict
 
 
 class MedicamentoSchema(BaseModel):
-    id_medicamento: int
+    id_medicamento: int | None = None
     nombre: str
     descripcion: str | None = None
     categoria: str

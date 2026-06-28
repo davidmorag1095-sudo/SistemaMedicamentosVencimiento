@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict
 
 
 class EntregaSchema(BaseModel):
-    id_entrega: int
+    id_entrega: int | None = None
     id_solicitud: int
     id_detalle_donacion: int
     id_usuario: int

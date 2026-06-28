@@ -7,15 +7,20 @@ class DonacionRepository():
         self.db = SessionLocal()
 
     def create(self, id_donacion, id_usuario, id_centro, fecha_donacion, estado):
-        donacion = DonacionORM(
-            id_donacion=id_donacion,
-            id_usuario=id_usuario,
-            id_centro=id_centro,
-            fecha_donacion=fecha_donacion,
-            estado=estado
-        )
+        datos_donacion = {
+            "id_usuario": id_usuario,
+            "id_centro": id_centro,
+            "fecha_donacion": fecha_donacion,
+            "estado": estado
+        }
+
+        if id_donacion is not None:
+            datos_donacion["id_donacion"] = id_donacion
+
+        donacion = DonacionORM(**datos_donacion)
         self.db.add(donacion)
         self.db.commit()
+        self.db.refresh(donacion)
         return donacion
 
     def get_all(self):
@@ -25,17 +30,22 @@ class DonacionRepository():
         return self.db.query(DonacionORM).filter_by(id_donacion=id_donacion).first()
 
     def create_detalle(self, id_detalle, id_donacion, id_medicamento, cantidad, fecha_vencimiento, lote, estado_medicamento):
-        detalle = DetalleDonacionORM(
-            id_detalle=id_detalle,
-            id_donacion=id_donacion,
-            id_medicamento=id_medicamento,
-            cantidad=cantidad,
-            fecha_vencimiento=fecha_vencimiento,
-            lote=lote,
-            estado_medicamento=estado_medicamento
-        )
+        datos_detalle = {
+            "id_donacion": id_donacion,
+            "id_medicamento": id_medicamento,
+            "cantidad": cantidad,
+            "fecha_vencimiento": fecha_vencimiento,
+            "lote": lote,
+            "estado_medicamento": estado_medicamento
+        }
+
+        if id_detalle is not None:
+            datos_detalle["id_detalle"] = id_detalle
+
+        detalle = DetalleDonacionORM(**datos_detalle)
         self.db.add(detalle)
         self.db.commit()
+        self.db.refresh(detalle)
         return detalle
 
     def get_detalle(self, id_detalle):

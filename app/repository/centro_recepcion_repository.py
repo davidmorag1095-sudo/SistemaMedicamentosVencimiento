@@ -7,15 +7,20 @@ class CentroRecepcionRepository():
         self.db = SessionLocal()
 
     def create(self, id_centro, nombre, direccion, telefono, responsable):
-        centro = CentroRecepcionORM(
-            id_centro=id_centro,
-            nombre=nombre,
-            direccion=direccion,
-            telefono=telefono,
-            responsable=responsable
-        )
+        datos_centro = {
+            "nombre": nombre,
+            "direccion": direccion,
+            "telefono": telefono,
+            "responsable": responsable
+        }
+
+        if id_centro is not None:
+            datos_centro["id_centro"] = id_centro
+
+        centro = CentroRecepcionORM(**datos_centro)
         self.db.add(centro)
         self.db.commit()
+        self.db.refresh(centro)
         return centro
 
     def get_all(self):

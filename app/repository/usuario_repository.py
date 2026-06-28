@@ -7,16 +7,21 @@ class UsuarioRepository():
         self.db = SessionLocal()
 
     def create(self, id_usuario, nombre, correo, contrasena, rol, activo=True):
-        usuario = UsuarioORM(
-            id_usuario=id_usuario,
-            nombre=nombre,
-            correo=correo,
-            contrasena=contrasena,
-            rol=rol,
-            activo=activo
-        )
+        datos_usuario = {
+            "nombre": nombre,
+            "correo": correo,
+            "contrasena": contrasena,
+            "rol": rol,
+            "activo": activo
+        }
+
+        if id_usuario is not None:
+            datos_usuario["id_usuario"] = id_usuario
+
+        usuario = UsuarioORM(**datos_usuario)
         self.db.add(usuario)
         self.db.commit()
+        self.db.refresh(usuario)
         return usuario
 
     def get_all(self):

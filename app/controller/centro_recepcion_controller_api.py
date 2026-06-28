@@ -9,13 +9,16 @@ service = CentroRecepcionService()
 
 @router.post("/", response_model=CentroRecepcionSchema)
 def create_centro(centro: CentroRecepcionSchema):
-    return service.create_centro(
-        centro.id_centro,
-        centro.nombre,
-        centro.direccion,
-        centro.telefono,
-        centro.responsable
-    )
+    try:
+        return service.create_centro(
+            centro.id_centro,
+            centro.nombre,
+            centro.direccion,
+            centro.telefono,
+            centro.responsable
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
 
 
 @router.get("/{id_centro}", response_model=CentroRecepcionSchema)
@@ -33,13 +36,17 @@ def list_centros():
 
 @router.put("/{id_centro}", response_model=CentroRecepcionSchema)
 def update_centro(id_centro: int, centro: CentroRecepcionSchema):
-    updated = service.update_centro(
-        id_centro,
-        centro.nombre,
-        centro.direccion,
-        centro.telefono,
-        centro.responsable
-    )
+    try:
+        updated = service.update_centro(
+            id_centro,
+            centro.nombre,
+            centro.direccion,
+            centro.telefono,
+            centro.responsable
+        )
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+
     if not updated:
         raise HTTPException(status_code=404, detail="Centro no encontrado")
     return updated

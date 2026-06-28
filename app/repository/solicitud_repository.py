@@ -7,15 +7,20 @@ class SolicitudRepository():
         self.db = SessionLocal()
 
     def create(self, id_solicitud, id_usuario, fecha_solicitud, estado, observacion):
-        solicitud = SolicitudORM(
-            id_solicitud=id_solicitud,
-            id_usuario=id_usuario,
-            fecha_solicitud=fecha_solicitud,
-            estado=estado,
-            observacion=observacion
-        )
+        datos_solicitud = {
+            "id_usuario": id_usuario,
+            "fecha_solicitud": fecha_solicitud,
+            "estado": estado,
+            "observacion": observacion
+        }
+
+        if id_solicitud is not None:
+            datos_solicitud["id_solicitud"] = id_solicitud
+
+        solicitud = SolicitudORM(**datos_solicitud)
         self.db.add(solicitud)
         self.db.commit()
+        self.db.refresh(solicitud)
         return solicitud
 
     def get_all(self):
@@ -25,15 +30,20 @@ class SolicitudRepository():
         return self.db.query(SolicitudORM).filter_by(id_solicitud=id_solicitud).first()
 
     def create_detalle(self, id_detalle_solicitud, id_solicitud, id_medicamento, cantidad_solicitada, cantidad_aprobada):
-        detalle = DetalleSolicitudORM(
-            id_detalle_solicitud=id_detalle_solicitud,
-            id_solicitud=id_solicitud,
-            id_medicamento=id_medicamento,
-            cantidad_solicitada=cantidad_solicitada,
-            cantidad_aprobada=cantidad_aprobada
-        )
+        datos_detalle = {
+            "id_solicitud": id_solicitud,
+            "id_medicamento": id_medicamento,
+            "cantidad_solicitada": cantidad_solicitada,
+            "cantidad_aprobada": cantidad_aprobada
+        }
+
+        if id_detalle_solicitud is not None:
+            datos_detalle["id_detalle_solicitud"] = id_detalle_solicitud
+
+        detalle = DetalleSolicitudORM(**datos_detalle)
         self.db.add(detalle)
         self.db.commit()
+        self.db.refresh(detalle)
         return detalle
 
     def get_detalle(self, id_detalle_solicitud):

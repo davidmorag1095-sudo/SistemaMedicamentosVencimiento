@@ -12,7 +12,7 @@ class DonacionORM(Base):
     id_usuario = Column(Integer, ForeignKey('usuarios.id_usuario'), nullable=False)
     id_centro = Column(Integer, ForeignKey('centros_recepcion.id_centro'), nullable=False)
     fecha_donacion = Column(DateTime, default=datetime.now)
-    estado = Column(String(30), default='registrada')
+    estado = Column(String(30), default='en proceso')
 
     def __repr__(self):
         return f"Donacion: {self.id_donacion} Estado: {self.estado}"

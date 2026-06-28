@@ -7,16 +7,21 @@ class MedicamentoRepository():
         self.db = SessionLocal()
 
     def create(self, id_medicamento, nombre, descripcion, categoria, presentacion, requiere_receta=False):
-        medicamento = MedicamentoORM(
-            id_medicamento=id_medicamento,
-            nombre=nombre,
-            descripcion=descripcion,
-            categoria=categoria,
-            presentacion=presentacion,
-            requiere_receta=requiere_receta
-        )
+        datos_medicamento = {
+            "nombre": nombre,
+            "descripcion": descripcion,
+            "categoria": categoria,
+            "presentacion": presentacion,
+            "requiere_receta": requiere_receta
+        }
+
+        if id_medicamento is not None:
+            datos_medicamento["id_medicamento"] = id_medicamento
+
+        medicamento = MedicamentoORM(**datos_medicamento)
         self.db.add(medicamento)
         self.db.commit()
+        self.db.refresh(medicamento)
         return medicamento
 
     def get_all(self):

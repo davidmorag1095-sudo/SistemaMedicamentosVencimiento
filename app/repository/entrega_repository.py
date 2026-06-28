@@ -9,16 +9,21 @@ class EntregaRepository():
         self.db = SessionLocal()
 
     def create(self, id_entrega, id_solicitud, id_detalle_donacion, id_usuario, cantidad_entregada, fecha_entrega):
-        entrega = EntregaORM(
-            id_entrega=id_entrega,
-            id_solicitud=id_solicitud,
-            id_detalle_donacion=id_detalle_donacion,
-            id_usuario=id_usuario,
-            cantidad_entregada=cantidad_entregada,
-            fecha_entrega=fecha_entrega
-        )
+        datos_entrega = {
+            "id_solicitud": id_solicitud,
+            "id_detalle_donacion": id_detalle_donacion,
+            "id_usuario": id_usuario,
+            "cantidad_entregada": cantidad_entregada,
+            "fecha_entrega": fecha_entrega
+        }
+
+        if id_entrega is not None:
+            datos_entrega["id_entrega"] = id_entrega
+
+        entrega = EntregaORM(**datos_entrega)
         self.db.add(entrega)
         self.db.commit()
+        self.db.refresh(entrega)
         return entrega
 
     def get_all(self):

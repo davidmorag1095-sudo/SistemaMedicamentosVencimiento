@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict
 
 
 class DonacionSchema(BaseModel):
-    id_donacion: int
+    id_donacion: int | None = None
     id_usuario: int
     id_centro: int
     fecha_donacion: datetime
@@ -14,7 +14,7 @@ class DonacionSchema(BaseModel):
 
 
 class DetalleDonacionSchema(BaseModel):
-    id_detalle: int
+    id_detalle: int | None = None
     id_donacion: int
     id_medicamento: int
     cantidad: int
