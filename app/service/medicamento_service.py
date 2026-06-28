@@ -28,6 +28,9 @@ class MedicamentoService:
 #--------------------------------------------------------------------------------------------------------------
 
     def validar_categoria_presentacion(self, categoria, presentacion):
+        if not categoria.strip() or not presentacion.strip():
+            raise ValueError("Debe completar todos los campos")
+
         if categoria not in CATEGORIAS_MEDICAMENTO:
             raise ValueError("Categoria no permitida")
 
@@ -41,7 +44,7 @@ class MedicamentoService:
 #--------------------------------------------------------------------------------------------------------------
 
     def create_medicamento(self, id_medicamento, nombre, descripcion, categoria, presentacion, requiere_receta=False):
-        if not nombre.strip():
+        if not nombre.strip() or not descripcion.strip() or not categoria.strip() or not presentacion.strip():
             raise ValueError("Debe completar todos los campos")
 
         self.validar_categoria_presentacion(categoria, presentacion)
@@ -58,7 +61,10 @@ class MedicamentoService:
 #--------------------------------------------------------------------------------------------------------------
 
     def update_medicamento(self, id_medicamento, nombre, descripcion, categoria, presentacion, requiere_receta=False):
-        if not nombre.strip():
+        if not self.repo.get(id_medicamento):
+            raise ValueError("Medicamento no encontrado")
+
+        if not nombre.strip() or not descripcion.strip() or not categoria.strip() or not presentacion.strip():
             raise ValueError("Debe completar todos los campos")
 
         self.validar_categoria_presentacion(categoria, presentacion)
