@@ -19,11 +19,17 @@ class UsuarioService:
 #--------------------------------------------------------------------------------------------------------------
 
     def validar_rol(self, rol):
+        if not rol.strip():
+            raise ValueError("Debe completar todos los campos")
+
         if rol not in ROLES_USUARIO:
             raise ValueError("Rol no permitido")
 #--------------------------------------------------------------------------------------------------------------
 
     def validar_correo(self, correo, id_usuario=None):
+        if not correo.strip():
+            raise ValueError("Debe completar todos los campos")
+
         if "@" not in correo:
             raise ValueError("Correo invalido por favor intente de nuevo")
 
@@ -39,7 +45,7 @@ class UsuarioService:
 #--------------------------------------------------------------------------------------------------------------
 
     def create_usuario(self, id_usuario, nombre, correo, contrasena, rol, activo=True):
-        if not nombre.strip() or not correo.strip() or not contrasena.strip():
+        if not nombre.strip() or not correo.strip() or not contrasena.strip() or not rol.strip():
             raise ValueError("Debe completar todos los campos")
 
         self.validar_rol(rol)
@@ -57,7 +63,10 @@ class UsuarioService:
 #--------------------------------------------------------------------------------------------------------------
 
     def update_usuario(self, id_usuario, nombre, correo, contrasena, rol, activo=True):
-        if not nombre.strip() or not correo.strip() or not contrasena.strip():
+        if not self.repo.get(id_usuario):
+            raise ValueError("Usuario no encontrado")
+
+        if not nombre.strip() or not correo.strip() or not contrasena.strip() or not rol.strip():
             raise ValueError("Debe completar todos los campos")
 
         self.validar_rol(rol)
