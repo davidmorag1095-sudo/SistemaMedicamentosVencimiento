@@ -23,6 +23,9 @@ class SolicitudService:
 #--------------------------------------------------------------------------------------------------------------
 
     def create_solicitud(self, id_solicitud, id_usuario, fecha_solicitud, estado, observacion):
+        if not estado.strip() or not observacion.strip():
+            raise ValueError("Debe completar todos los campos")
+
         self.validar_solicitud(id_usuario, estado)
         return self.repo.create(id_solicitud, id_usuario, fecha_solicitud, estado, observacion)
 #--------------------------------------------------------------------------------------------------------------
@@ -36,6 +39,12 @@ class SolicitudService:
 #--------------------------------------------------------------------------------------------------------------
 
     def update_solicitud(self, id_solicitud, id_usuario, fecha_solicitud, estado, observacion):
+        if not self.repo.get(id_solicitud):
+            raise ValueError("Solicitud no encontrada")
+
+        if not estado.strip() or not observacion.strip():
+            raise ValueError("Debe completar todos los campos")
+
         self.validar_solicitud(id_usuario, estado)
         return self.repo.update(id_solicitud, id_usuario, fecha_solicitud, estado, observacion)
 #--------------------------------------------------------------------------------------------------------------
@@ -72,6 +81,9 @@ class SolicitudService:
 #--------------------------------------------------------------------------------------------------------------
 
     def validar_solicitud(self, id_usuario, estado):
+        if not estado.strip():
+            raise ValueError("Debe completar todos los campos")
+
         if not self.usuario_repo.get(id_usuario):
             raise ValueError("Usuario no encontrado")
 
