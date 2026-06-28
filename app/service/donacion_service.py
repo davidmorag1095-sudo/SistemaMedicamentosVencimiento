@@ -59,7 +59,7 @@ class DonacionService:
 #--------------------------------------------------------------------------------------------------------------
 
     def create_detalle_donacion(self, id_detalle, id_donacion, id_medicamento, cantidad, fecha_vencimiento, lote, estado_medicamento):
-        if not lote.strip():
+        if not lote.strip() or not estado_medicamento.strip():
             raise ValueError("Debe completar todos los campos")
 
         self.validar_detalle_donacion(id_donacion, id_medicamento, cantidad, fecha_vencimiento, estado_medicamento)
@@ -75,7 +75,7 @@ class DonacionService:
 #--------------------------------------------------------------------------------------------------------------
 
     def update_detalle_donacion(self, id_detalle, id_medicamento, cantidad, fecha_vencimiento, lote, estado_medicamento):
-        if not lote.strip():
+        if not lote.strip() or not estado_medicamento.strip():
             raise ValueError("Debe completar todos los campos")
 
         detalle = self.repo.get_detalle(id_detalle)
@@ -92,6 +92,9 @@ class DonacionService:
 #--------------------------------------------------------------------------------------------------------------
 
     def validar_donacion(self, id_usuario, id_centro, estado):
+        if not estado.strip():
+            raise ValueError("Debe completar todos los campos")
+
         if not self.usuario_repo.get(id_usuario):
             raise ValueError("Usuario no encontrado")
 
