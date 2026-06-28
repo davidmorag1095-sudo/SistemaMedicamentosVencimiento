@@ -21,6 +21,9 @@ class UsuarioService:
             raise ValueError("Rol no permitido")
 
     def validar_correo(self, correo, id_usuario=None):
+        if "@" not in correo:
+            raise ValueError("Correo invalido por favor intente de nuevo")
+
         usuario = self.repo.get_by_correo(correo)
 
         if usuario and usuario.id_usuario != id_usuario:
