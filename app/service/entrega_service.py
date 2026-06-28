@@ -13,23 +13,29 @@ class EntregaService:
         self.donacion_repo = DonacionRepository()
         self.solicitud_repo = SolicitudRepository()
         self.usuario_repo = UsuarioRepository()
+#--------------------------------------------------------------------------------------------------------------
 
     def create_entrega(self, id_entrega, id_solicitud, id_detalle_donacion, id_usuario, cantidad_entregada, fecha_entrega):
         self.validar_entrega(None, id_solicitud, id_detalle_donacion, id_usuario, cantidad_entregada)
         return self.repo.create(id_entrega, id_solicitud, id_detalle_donacion, id_usuario, cantidad_entregada, fecha_entrega)
+#--------------------------------------------------------------------------------------------------------------
 
     def get_entrega(self, id_entrega):
         return self.repo.get(id_entrega)
+#--------------------------------------------------------------------------------------------------------------
 
     def list_entregas(self):
         return self.repo.get_all()
+#--------------------------------------------------------------------------------------------------------------
 
     def update_entrega(self, id_entrega, id_solicitud, id_detalle_donacion, id_usuario, cantidad_entregada, fecha_entrega):
         self.validar_entrega(id_entrega, id_solicitud, id_detalle_donacion, id_usuario, cantidad_entregada)
         return self.repo.update(id_entrega, id_solicitud, id_detalle_donacion, id_usuario, cantidad_entregada, fecha_entrega)
+#--------------------------------------------------------------------------------------------------------------
 
     def delete_entrega(self, id_entrega):
         return self.repo.delete(id_entrega)
+#--------------------------------------------------------------------------------------------------------------
 
     def validar_entrega(self, id_entrega, id_solicitud, id_detalle_donacion, id_usuario, cantidad_entregada):
         solicitud = self.solicitud_repo.get(id_solicitud)
@@ -58,3 +64,4 @@ class EntregaService:
 
         if cantidad_entregada > cantidad_disponible:
             raise ValueError("No hay stock suficiente para la entrega")
+#--------------------------------------------------------------------------------------------------------------
