@@ -18,12 +18,15 @@ class CentroRecepcionService:
 #--------------------------------------------------------------------------------------------------------------
 
     def validar_nombre_centro(self, nombre):
+        if not nombre.strip():
+            raise ValueError("Debe completar todos los campos")
+
         if nombre not in NOMBRES_CENTRO:
             raise ValueError("Nombre de centro no permitido")
 #--------------------------------------------------------------------------------------------------------------
 
     def create_centro(self, id_centro, nombre, direccion, telefono, responsable):
-        if not direccion.strip() or not telefono.strip() or not responsable.strip():
+        if not nombre.strip() or not direccion.strip() or not telefono.strip() or not responsable.strip():
             raise ValueError("Debe completar todos los campos")
 
         self.validar_nombre_centro(nombre)
@@ -39,7 +42,7 @@ class CentroRecepcionService:
 #--------------------------------------------------------------------------------------------------------------
 
     def update_centro(self, id_centro, nombre, direccion, telefono, responsable):
-        if not direccion.strip() or not telefono.strip() or not responsable.strip():
+        if not nombre.strip() or not direccion.strip() or not telefono.strip() or not responsable.strip():
             raise ValueError("Debe completar todos los campos")
 
         self.validar_nombre_centro(nombre)
