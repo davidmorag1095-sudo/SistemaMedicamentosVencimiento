@@ -20,7 +20,13 @@ class UsuarioService:
         if rol not in ROLES_USUARIO:
             raise ValueError("Rol no permitido")
 
+    def validar_texto(self, valor, campo):
+        if not valor or valor.strip() == "":
+            raise ValueError(f"{campo} no puede estar vacio")
+
     def validar_correo(self, correo, id_usuario=None):
+        self.validar_texto(correo, "Correo")
+
         if "@" not in correo:
             raise ValueError("Correo invalido por favor intente de nuevo")
 
@@ -29,9 +35,16 @@ class UsuarioService:
         if usuario and usuario.id_usuario != id_usuario:
             raise ValueError("Correo ingresado ya esta registrado")
 
+    def validar_activo(self, activo):
+        if not isinstance(activo, bool):
+            raise ValueError("Activo debe ser S o N")
+
     def create_usuario(self, id_usuario, nombre, correo, contrasena, rol, activo=True):
+        self.validar_texto(nombre, "Nombre")
+        self.validar_texto(contrasena, "Contrasena")
         self.validar_rol(rol)
         self.validar_correo(correo)
+        self.validar_activo(activo)
         return self.repo.create(id_usuario, nombre, correo, contrasena, rol, activo)
 
     def get_usuario(self, id_usuario):
@@ -41,8 +54,11 @@ class UsuarioService:
         return self.repo.get_all()
 
     def update_usuario(self, id_usuario, nombre, correo, contrasena, rol, activo=True):
+        self.validar_texto(nombre, "Nombre")
+        self.validar_texto(contrasena, "Contrasena")
         self.validar_rol(rol)
         self.validar_correo(correo, id_usuario)
+        self.validar_activo(activo)
         return self.repo.update(id_usuario, nombre, correo, contrasena, rol, activo)
 
     def delete_usuario(self, id_usuario):

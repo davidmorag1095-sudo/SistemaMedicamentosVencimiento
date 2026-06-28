@@ -31,8 +31,18 @@ class MedicamentoService:
         if presentacion not in PRESENTACIONES_MEDICAMENTO:
             raise ValueError("Presentacion no permitida")
 
+    def validar_texto(self, valor, campo):
+        if not valor or valor.strip() == "":
+            raise ValueError(f"{campo} no puede estar vacio")
+
+    def validar_requiere_receta(self, requiere_receta):
+        if not isinstance(requiere_receta, bool):
+            raise ValueError("Requiere receta debe ser S o N")
+
     def create_medicamento(self, id_medicamento, nombre, descripcion, categoria, presentacion, requiere_receta=False):
+        self.validar_texto(nombre, "Nombre")
         self.validar_categoria_presentacion(categoria, presentacion)
+        self.validar_requiere_receta(requiere_receta)
         return self.repo.create(id_medicamento, nombre, descripcion, categoria, presentacion, requiere_receta)
 
     def get_medicamento(self, id_medicamento):
@@ -42,7 +52,9 @@ class MedicamentoService:
         return self.repo.get_all()
 
     def update_medicamento(self, id_medicamento, nombre, descripcion, categoria, presentacion, requiere_receta=False):
+        self.validar_texto(nombre, "Nombre")
         self.validar_categoria_presentacion(categoria, presentacion)
+        self.validar_requiere_receta(requiere_receta)
         return self.repo.update(id_medicamento, nombre, descripcion, categoria, presentacion, requiere_receta)
 
     def delete_medicamento(self, id_medicamento):

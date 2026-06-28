@@ -11,6 +11,13 @@ ESTADOS_DONACION = [
     "denegada"
 ]
 
+ESTADOS_MEDICAMENTO_DONACION = [
+    "disponible",
+    "entregado",
+    "vencido",
+    "descartado"
+]
+
 
 class DonacionService:
 
@@ -22,6 +29,9 @@ class DonacionService:
 
     def get_estados_donacion(self):
         return ESTADOS_DONACION
+
+    def get_estados_medicamento(self):
+        return ESTADOS_MEDICAMENTO_DONACION
 
     def create_donacion(self, id_donacion, id_usuario, id_centro, fecha_donacion, estado):
         self.validar_donacion(id_usuario, id_centro, estado)
@@ -42,6 +52,7 @@ class DonacionService:
 
     def create_detalle_donacion(self, id_detalle, id_donacion, id_medicamento, cantidad, fecha_vencimiento, lote, estado_medicamento):
         self.validar_detalle_donacion(id_donacion, id_medicamento, cantidad, fecha_vencimiento, estado_medicamento)
+        self.validar_lote(lote)
         return self.repo.create_detalle(id_detalle, id_donacion, id_medicamento, cantidad, fecha_vencimiento, lote, estado_medicamento)
 
     def get_detalle_donacion(self, id_detalle):
@@ -57,10 +68,15 @@ class DonacionService:
             raise ValueError("Detalle de donacion no encontrado")
 
         self.validar_detalle_donacion(detalle.id_donacion, id_medicamento, cantidad, fecha_vencimiento, estado_medicamento)
+        self.validar_lote(lote)
         return self.repo.update_detalle(id_detalle, id_medicamento, cantidad, fecha_vencimiento, lote, estado_medicamento)
 
     def delete_detalle_donacion(self, id_detalle):
         return self.repo.delete_detalle(id_detalle)
+
+    def validar_texto(self, valor, campo):
+        if not valor or valor.strip() == "":
+            raise ValueError(f"{campo} no puede estar vacio")
 
     def validar_donacion(self, id_usuario, id_centro, estado):
         if not self.usuario_repo.get(id_usuario):
@@ -73,8 +89,6 @@ class DonacionService:
             raise ValueError("Estado de donacion no valido")
 
     def validar_detalle_donacion(self, id_donacion, id_medicamento, cantidad, fecha_vencimiento, estado_medicamento):
-        estados_validos = ["disponible", "entregado", "vencido", "descartado"]
-
         if not self.repo.get(id_donacion):
             raise ValueError("Donacion no encontrada")
 
@@ -89,5 +103,8 @@ class DonacionService:
         if fecha <= date.today():
             raise ValueError("No se puede registrar un medicamento vencido")
 
-        if estado_medicamento not in estados_validos:
+        if estado_medicamento not in ESTADOS_MEDICAMENTO_DONACION:
             raise ValueError("Estado de medicamento no valido")
+
+    def validar_lote(self, lote):
+        self.validar_texto(lote, "Lote")

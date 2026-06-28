@@ -2,6 +2,13 @@ from repository.medicamento_repository import MedicamentoRepository
 from repository.solicitud_repository import SolicitudRepository
 from repository.usuario_repository import UsuarioRepository
 
+ESTADOS_SOLICITUD = [
+    "pendiente",
+    "aprobada",
+    "rechazada",
+    "entregada"
+]
+
 
 class SolicitudService:
 
@@ -9,6 +16,9 @@ class SolicitudService:
         self.repo = SolicitudRepository()
         self.usuario_repo = UsuarioRepository()
         self.medicamento_repo = MedicamentoRepository()
+
+    def get_estados_solicitud(self):
+        return ESTADOS_SOLICITUD
 
     def create_solicitud(self, id_solicitud, id_usuario, fecha_solicitud, estado, observacion):
         self.validar_solicitud(id_usuario, estado)
@@ -50,12 +60,10 @@ class SolicitudService:
         return self.repo.delete_detalle(id_detalle_solicitud)
 
     def validar_solicitud(self, id_usuario, estado):
-        estados_validos = ["pendiente", "aprobada", "rechazada", "entregada"]
-
         if not self.usuario_repo.get(id_usuario):
             raise ValueError("Usuario no encontrado")
 
-        if estado not in estados_validos:
+        if estado not in ESTADOS_SOLICITUD:
             raise ValueError("Estado de solicitud no valido")
 
     def validar_detalle_solicitud(self, id_solicitud, id_medicamento, cantidad_solicitada, cantidad_aprobada):

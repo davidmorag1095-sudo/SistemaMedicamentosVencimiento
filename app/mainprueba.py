@@ -20,23 +20,29 @@ def menu_principal():
     print("7. Salir")
 
 
+def leer_entero(mensaje):
+    while True:
+        valor = input(mensaje).strip()
+
+        try:
+            return int(valor)
+        except ValueError:
+            print("Debe ingresar un numero")
+
+
 def leer_opcion(titulo, opciones):
-    print(f"\n{titulo}")
+    while True:
+        print(f"\n{titulo}")
 
-    for indice, opcion in enumerate(opciones, start=1):
-        print(f"{indice}. {opcion}")
+        for indice, opcion in enumerate(opciones, start=1):
+            print(f"{indice}. {opcion}")
 
-    seleccion = int(input("Seleccione una opcion: "))
+        seleccion = leer_entero("Seleccione una opcion: ")
 
-    if seleccion < 1 or seleccion > len(opciones):
-        raise ValueError("Opcion invalida")
+        if seleccion >= 1 and seleccion <= len(opciones):
+            return opciones[seleccion - 1]
 
-    return opciones[seleccion - 1]
-
-
-def leer_texto_default(mensaje, valor_default):
-    valor = input(f"{mensaje} ({valor_default}): ").strip()
-    return valor if valor else valor_default
+        print("Opcion invalida")
 
 
 def leer_fecha(mensaje):
@@ -77,8 +83,16 @@ def leer_fecha_hora(mensaje):
 
 
 def leer_si_no(mensaje):
-    respuesta = input(f"{mensaje} S/N: ").strip().lower()
-    return respuesta == "s"
+    while True:
+        respuesta = input(f"{mensaje} S/N: ").strip().lower()
+
+        if respuesta == "s":
+            return True
+
+        if respuesta == "n":
+            return False
+
+        print("Opcion invalida. Digite S o N")
 
 
 def rollback_services(services):
@@ -123,7 +137,7 @@ def agregar_usuario(service):
 
 
 def buscar_usuario(service):
-    id_usuario = int(input("Id usuario: "))
+    id_usuario = leer_entero("Id usuario: ")
     mostrar_usuario(service.get_usuario(id_usuario))
 
 
@@ -140,7 +154,7 @@ def listar_usuarios(service):
 
 
 def actualizar_usuario(service):
-    id_usuario = int(input("Id usuario: "))
+    id_usuario = leer_entero("Id usuario: ")
     nombre = input("Nuevo nombre: ")
     correo = input("Nuevo correo: ")
     contrasena = input("Nueva contrasena: ")
@@ -156,7 +170,7 @@ def actualizar_usuario(service):
 
 
 def eliminar_usuario(service):
-    id_usuario = int(input("Id usuario: "))
+    id_usuario = leer_entero("Id usuario: ")
     usuario = service.delete_usuario(id_usuario)
 
     if usuario:
@@ -219,7 +233,7 @@ def agregar_centro(service):
 
 
 def buscar_centro(service):
-    id_centro = int(input("Id centro: "))
+    id_centro = leer_entero("Id centro: ")
     mostrar_centro(service.get_centro(id_centro))
 
 
@@ -236,7 +250,7 @@ def listar_centros(service):
 
 
 def actualizar_centro(service):
-    id_centro = int(input("Id centro: "))
+    id_centro = leer_entero("Id centro: ")
     nombre = leer_nombre_centro(service)
     direccion = input("Nueva direccion: ")
     telefono = input("Nuevo telefono: ")
@@ -251,7 +265,7 @@ def actualizar_centro(service):
 
 
 def eliminar_centro(service):
-    id_centro = int(input("Id centro: "))
+    id_centro = leer_entero("Id centro: ")
     centro = service.delete_centro(id_centro)
 
     if centro:
@@ -327,7 +341,7 @@ def agregar_medicamento(service):
 
 
 def buscar_medicamento(service):
-    id_medicamento = int(input("Id medicamento: "))
+    id_medicamento = leer_entero("Id medicamento: ")
     medicamento = service.get_medicamento(id_medicamento)
     mostrar_medicamento(medicamento)
 
@@ -345,7 +359,7 @@ def listar_medicamentos(service):
 
 
 def actualizar_medicamento(service):
-    id_medicamento = int(input("Id medicamento: "))
+    id_medicamento = leer_entero("Id medicamento: ")
     nombre = input("Nuevo nombre: ")
     descripcion = input("Nueva descripcion: ")
     categoria = leer_categoria(service)
@@ -368,7 +382,7 @@ def actualizar_medicamento(service):
 
 
 def eliminar_medicamento(service):
-    id_medicamento = int(input("Id medicamento: "))
+    id_medicamento = leer_entero("Id medicamento: ")
     medicamento = service.delete_medicamento(id_medicamento)
 
     if medicamento:
@@ -429,9 +443,8 @@ def mostrar_detalle_donacion(detalle):
         print("No se encontro el detalle")
 
 
-def leer_estado_medicamento():
-    estados = ["disponible", "entregado", "vencido", "descartado"]
-    return leer_opcion("Estados de medicamento", estados)
+def leer_estado_medicamento(service):
+    return leer_opcion("Estados de medicamento", service.get_estados_medicamento())
 
 
 def leer_estado_donacion(service):
@@ -439,8 +452,8 @@ def leer_estado_donacion(service):
 
 
 def agregar_donacion(service):
-    id_usuario = int(input("Id usuario: "))
-    id_centro = int(input("Id centro: "))
+    id_usuario = leer_entero("Id usuario: ")
+    id_centro = leer_entero("Id centro: ")
     fecha_donacion = leer_fecha_hora("Fecha de donacion")
     estado = leer_estado_donacion(service)
 
@@ -449,7 +462,7 @@ def agregar_donacion(service):
 
 
 def buscar_donacion(service):
-    id_donacion = int(input("Id donacion: "))
+    id_donacion = leer_entero("Id donacion: ")
     mostrar_donacion(service.get_donacion(id_donacion))
 
 
@@ -466,9 +479,9 @@ def listar_donaciones(service):
 
 
 def actualizar_donacion(service):
-    id_donacion = int(input("Id donacion: "))
-    id_usuario = int(input("Id usuario: "))
-    id_centro = int(input("Id centro: "))
+    id_donacion = leer_entero("Id donacion: ")
+    id_usuario = leer_entero("Id usuario: ")
+    id_centro = leer_entero("Id centro: ")
     fecha_donacion = leer_fecha_hora("Nueva fecha de donacion")
     estado = leer_estado_donacion(service)
 
@@ -481,7 +494,7 @@ def actualizar_donacion(service):
 
 
 def eliminar_donacion(service):
-    id_donacion = int(input("Id donacion: "))
+    id_donacion = leer_entero("Id donacion: ")
     donacion = service.delete_donacion(id_donacion)
 
     if donacion:
@@ -491,12 +504,12 @@ def eliminar_donacion(service):
 
 
 def agregar_detalle_donacion(service):
-    id_donacion = int(input("Id donacion: "))
-    id_medicamento = int(input("Id medicamento: "))
-    cantidad = int(input("Cantidad: "))
+    id_donacion = leer_entero("Id donacion: ")
+    id_medicamento = leer_entero("Id medicamento: ")
+    cantidad = leer_entero("Cantidad: ")
     fecha_vencimiento = leer_fecha("Fecha de vencimiento")
     lote = input("Lote: ")
-    estado_medicamento = leer_estado_medicamento()
+    estado_medicamento = leer_estado_medicamento(service)
 
     detalle = service.create_detalle_donacion(
         None,
@@ -511,12 +524,12 @@ def agregar_detalle_donacion(service):
 
 
 def buscar_detalle_donacion(service):
-    id_detalle = int(input("Id detalle: "))
+    id_detalle = leer_entero("Id detalle: ")
     mostrar_detalle_donacion(service.get_detalle_donacion(id_detalle))
 
 
 def listar_detalles_donacion(service):
-    id_donacion = int(input("Id donacion: "))
+    id_donacion = leer_entero("Id donacion: ")
     detalles = service.list_detalles_donacion(id_donacion)
 
     if not detalles:
@@ -529,12 +542,12 @@ def listar_detalles_donacion(service):
 
 
 def actualizar_detalle_donacion(service):
-    id_detalle = int(input("Id detalle: "))
-    id_medicamento = int(input("Id medicamento: "))
-    cantidad = int(input("Cantidad: "))
+    id_detalle = leer_entero("Id detalle: ")
+    id_medicamento = leer_entero("Id medicamento: ")
+    cantidad = leer_entero("Cantidad: ")
     fecha_vencimiento = leer_fecha("Fecha de vencimiento")
     lote = input("Lote: ")
-    estado_medicamento = leer_estado_medicamento()
+    estado_medicamento = leer_estado_medicamento(service)
 
     detalle = service.update_detalle_donacion(
         id_detalle,
@@ -552,7 +565,7 @@ def actualizar_detalle_donacion(service):
 
 
 def eliminar_detalle_donacion(service):
-    id_detalle = int(input("Id detalle: "))
+    id_detalle = leer_entero("Id detalle: ")
     detalle = service.delete_detalle_donacion(id_detalle)
 
     if detalle:
@@ -626,15 +639,14 @@ def mostrar_detalle_solicitud(detalle):
         print("No se encontro el detalle")
 
 
-def leer_estado_solicitud():
-    estados = ["pendiente", "aprobada", "rechazada", "entregada"]
-    return leer_opcion("Estados de solicitud", estados)
+def leer_estado_solicitud(service):
+    return leer_opcion("Estados de solicitud", service.get_estados_solicitud())
 
 
 def agregar_solicitud(service):
-    id_usuario = int(input("Id usuario: "))
+    id_usuario = leer_entero("Id usuario: ")
     fecha_solicitud = leer_fecha_hora("Fecha de solicitud")
-    estado = leer_estado_solicitud()
+    estado = leer_estado_solicitud(service)
     observacion = input("Observacion: ")
 
     solicitud = service.create_solicitud(None, id_usuario, fecha_solicitud, estado, observacion)
@@ -642,7 +654,7 @@ def agregar_solicitud(service):
 
 
 def buscar_solicitud(service):
-    id_solicitud = int(input("Id solicitud: "))
+    id_solicitud = leer_entero("Id solicitud: ")
     mostrar_solicitud(service.get_solicitud(id_solicitud))
 
 
@@ -659,10 +671,10 @@ def listar_solicitudes(service):
 
 
 def actualizar_solicitud(service):
-    id_solicitud = int(input("Id solicitud: "))
-    id_usuario = int(input("Id usuario: "))
+    id_solicitud = leer_entero("Id solicitud: ")
+    id_usuario = leer_entero("Id usuario: ")
     fecha_solicitud = leer_fecha_hora("Nueva fecha de solicitud")
-    estado = leer_estado_solicitud()
+    estado = leer_estado_solicitud(service)
     observacion = input("Observacion: ")
 
     solicitud = service.update_solicitud(id_solicitud, id_usuario, fecha_solicitud, estado, observacion)
@@ -674,7 +686,7 @@ def actualizar_solicitud(service):
 
 
 def eliminar_solicitud(service):
-    id_solicitud = int(input("Id solicitud: "))
+    id_solicitud = leer_entero("Id solicitud: ")
     solicitud = service.delete_solicitud(id_solicitud)
 
     if solicitud:
@@ -684,10 +696,10 @@ def eliminar_solicitud(service):
 
 
 def agregar_detalle_solicitud(service):
-    id_solicitud = int(input("Id solicitud: "))
-    id_medicamento = int(input("Id medicamento: "))
-    cantidad_solicitada = int(input("Cantidad solicitada: "))
-    cantidad_aprobada = int(input("Cantidad aprobada: "))
+    id_solicitud = leer_entero("Id solicitud: ")
+    id_medicamento = leer_entero("Id medicamento: ")
+    cantidad_solicitada = leer_entero("Cantidad solicitada: ")
+    cantidad_aprobada = leer_entero("Cantidad aprobada: ")
 
     detalle = service.create_detalle_solicitud(
         None,
@@ -703,12 +715,12 @@ def agregar_detalle_solicitud(service):
 
 
 def buscar_detalle_solicitud(service):
-    id_detalle_solicitud = int(input("Id detalle solicitud: "))
+    id_detalle_solicitud = leer_entero("Id detalle solicitud: ")
     mostrar_detalle_solicitud(service.get_detalle_solicitud(id_detalle_solicitud))
 
 
 def listar_detalles_solicitud(service):
-    id_solicitud = int(input("Id solicitud: "))
+    id_solicitud = leer_entero("Id solicitud: ")
     detalles = service.list_detalles_solicitud(id_solicitud)
 
     if not detalles:
@@ -721,10 +733,10 @@ def listar_detalles_solicitud(service):
 
 
 def actualizar_detalle_solicitud(service):
-    id_detalle_solicitud = int(input("Id detalle solicitud: "))
-    id_medicamento = int(input("Id medicamento: "))
-    cantidad_solicitada = int(input("Cantidad solicitada: "))
-    cantidad_aprobada = int(input("Cantidad aprobada: "))
+    id_detalle_solicitud = leer_entero("Id detalle solicitud: ")
+    id_medicamento = leer_entero("Id medicamento: ")
+    cantidad_solicitada = leer_entero("Cantidad solicitada: ")
+    cantidad_aprobada = leer_entero("Cantidad aprobada: ")
 
     detalle = service.update_detalle_solicitud(
         id_detalle_solicitud,
@@ -740,7 +752,7 @@ def actualizar_detalle_solicitud(service):
 
 
 def eliminar_detalle_solicitud(service):
-    id_detalle_solicitud = int(input("Id detalle solicitud: "))
+    id_detalle_solicitud = leer_entero("Id detalle solicitud: ")
     detalle = service.delete_detalle_solicitud(id_detalle_solicitud)
 
     if detalle:
@@ -805,10 +817,10 @@ def mostrar_entrega(entrega):
 
 
 def agregar_entrega(service):
-    id_solicitud = int(input("Id solicitud: "))
-    id_detalle_donacion = int(input("Id detalle donacion: "))
-    id_usuario = int(input("Id usuario: "))
-    cantidad_entregada = int(input("Cantidad entregada: "))
+    id_solicitud = leer_entero("Id solicitud: ")
+    id_detalle_donacion = leer_entero("Id detalle donacion: ")
+    id_usuario = leer_entero("Id usuario: ")
+    cantidad_entregada = leer_entero("Cantidad entregada: ")
     fecha_entrega = leer_fecha_hora("Fecha de entrega")
 
     entrega = service.create_entrega(
@@ -823,7 +835,7 @@ def agregar_entrega(service):
 
 
 def buscar_entrega(service):
-    id_entrega = int(input("Id entrega: "))
+    id_entrega = leer_entero("Id entrega: ")
     mostrar_entrega(service.get_entrega(id_entrega))
 
 
@@ -840,11 +852,11 @@ def listar_entregas(service):
 
 
 def actualizar_entrega(service):
-    id_entrega = int(input("Id entrega: "))
-    id_solicitud = int(input("Id solicitud: "))
-    id_detalle_donacion = int(input("Id detalle donacion: "))
-    id_usuario = int(input("Id usuario: "))
-    cantidad_entregada = int(input("Cantidad entregada: "))
+    id_entrega = leer_entero("Id entrega: ")
+    id_solicitud = leer_entero("Id solicitud: ")
+    id_detalle_donacion = leer_entero("Id detalle donacion: ")
+    id_usuario = leer_entero("Id usuario: ")
+    cantidad_entregada = leer_entero("Cantidad entregada: ")
     fecha_entrega = leer_fecha_hora("Fecha de entrega")
 
     entrega = service.update_entrega(
@@ -863,7 +875,7 @@ def actualizar_entrega(service):
 
 
 def eliminar_entrega(service):
-    id_entrega = int(input("Id entrega: "))
+    id_entrega = leer_entero("Id entrega: ")
     entrega = service.delete_entrega(id_entrega)
 
     if entrega:
