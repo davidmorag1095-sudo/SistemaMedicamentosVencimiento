@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Medicamentos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Gestion de Medicamentos</h1>
+        <p>Frontend para consumir API REST con FastAPI</p>
+    </header>
+
+    <section class="form-section">
+        <h2>Agregar / Actualizar Medicamento</h2>
+
+        <form id="medicamentoForm">
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="text" id="descripcion" placeholder="Descripcion" required>
+
+            <select id="categoria" required>
+                <option value="">Seleccione categoria</option>
+                <option value="Analgesico">Analgesico</option>
+                <option value="Antibiotico">Antibiotico</option>
+                <option value="Antialergico">Antialergico</option>
+            </select>
+
+            <select id="presentacion" required>
+                <option value="">Seleccione presentacion</option>
+                <option value="Tabletas">Tabletas</option>
+                <option value="Jarabe">Jarabe</option>
+                <option value="Inyectable">Inyectable</option>
+            </select>
+
+            <label class="checkbox-container">
+                <input type="checkbox" id="requiereReceta">
+                Requiere receta
+            </label>
+
+            <button type="submit">Guardar</button>
+        </form>
+        <br>
+
+        <div class="search-container">
+            <input type="number" id="searchMedicamento" placeholder="Buscar por ID">
+
+            <button id="btnSearch">
+                Buscar
+            </button>
+
+            <button id="btnLoad">
+                Mostrar Todos
+            </button>
+        </div>
+
+    </section>
+
+    <section class="table-section">
+        <h2>Listado de Medicamentos</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Categoria</th>
+                    <th>Presentacion</th>
+                    <th>Receta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="medicamentosTable">
+                <!-- Datos generados dinamicamente -->
+            </tbody>
+        </table>
+    </section>
+
+    <div id="messageBox" class="hidden"></div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
