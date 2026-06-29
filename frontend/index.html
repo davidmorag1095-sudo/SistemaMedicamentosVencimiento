@@ -4,81 +4,420 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion de Medicamentos</title>
+    <title>Sistema de Medicamentos</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
 
     <header>
-        <h1>Gestion de Medicamentos</h1>
-        <p>Frontend para consumir API REST con FastAPI</p>
+        <h1>Sistema de Medicamentos</h1>
+        <p>Control de medicamentos proximos a vencer</p>
     </header>
 
-    <section class="form-section">
-        <h2>Agregar / Actualizar Medicamento</h2>
+    <nav class="menu">
+        <button class="menu-btn active" data-section="usuariosSection">Usuarios</button>
+        <button class="menu-btn" data-section="centrosSection">Centros</button>
+        <button class="menu-btn" data-section="medicamentosSection">Medicamentos</button>
+        <button class="menu-btn" data-section="donacionesSection">Donaciones</button>
+        <button class="menu-btn" data-section="detallesDonacionSection">Detalles Donacion</button>
+        <button class="menu-btn" data-section="solicitudesSection">Solicitudes</button>
+        <button class="menu-btn" data-section="detallesSolicitudSection">Detalles Solicitud</button>
+        <button class="menu-btn" data-section="entregasSection">Entregas</button>
+    </nav>
 
-        <form id="medicamentoForm">
-            <input type="text" id="nombre" placeholder="Nombre" required>
-            <input type="text" id="descripcion" placeholder="Descripcion" required>
+    <main>
+        <section id="usuariosSection" class="module-section active-section">
+            <div class="form-section">
+                <h2>Agregar / Actualizar Usuario</h2>
 
-            <select id="categoria" required>
-                <option value="">Seleccione categoria</option>
-                <option value="Analgesico">Analgesico</option>
-                <option value="Antibiotico">Antibiotico</option>
-                <option value="Antialergico">Antialergico</option>
-            </select>
+                <form id="usuarioForm" class="form-grid">
+                    <input type="text" id="usuarioNombre" placeholder="Nombre" required>
+                    <input type="email" id="usuarioCorreo" placeholder="Correo" required>
+                    <input type="text" id="usuarioContrasena" placeholder="Contrasena" required>
 
-            <select id="presentacion" required>
-                <option value="">Seleccione presentacion</option>
-                <option value="Tabletas">Tabletas</option>
-                <option value="Jarabe">Jarabe</option>
-                <option value="Inyectable">Inyectable</option>
-            </select>
+                    <select id="usuarioRol" required>
+                        <option value="">Seleccione rol</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Donante">Donante</option>
+                        <option value="Solicitante">Solicitante</option>
+                        <option value="Usuario">Usuario</option>
+                    </select>
 
-            <label class="checkbox-container">
-                <input type="checkbox" id="requiereReceta">
-                Requiere receta
-            </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="usuarioActivo" checked>
+                        Activo
+                    </label>
 
-            <button type="submit">Guardar</button>
-        </form>
-        <br>
+                    <button type="submit">Guardar</button>
+                </form>
 
-        <div class="search-container">
-            <input type="number" id="searchMedicamento" placeholder="Buscar por ID">
+                <div class="search-container">
+                    <input type="number" id="buscarUsuario" placeholder="Buscar por ID">
+                    <button id="btnBuscarUsuario">Buscar</button>
+                    <button id="btnCargarUsuarios">Mostrar Todos</button>
+                    <button id="btnLimpiarUsuario" class="secondary-btn">Limpiar</button>
+                </div>
+            </div>
 
-            <button id="btnSearch">
-                Buscar
-            </button>
+            <div class="table-section">
+                <h2>Listado de Usuarios</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                                <th>Activo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usuariosTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-            <button id="btnLoad">
-                Mostrar Todos
-            </button>
-        </div>
+        <section id="centrosSection" class="module-section">
+            <div class="form-section">
+                <h2>Agregar / Actualizar Centro</h2>
 
-    </section>
+                <form id="centroForm" class="form-grid">
+                    <select id="centroNombre" required>
+                        <option value="">Seleccione centro</option>
+                        <option value="Centro de Salud Central">Centro de Salud Central</option>
+                        <option value="Clinica Comunitaria Norte">Clinica Comunitaria Norte</option>
+                        <option value="Punto de Recepcion Sur">Punto de Recepcion Sur</option>
+                    </select>
 
-    <section class="table-section">
-        <h2>Listado de Medicamentos</h2>
+                    <input type="text" id="centroDireccion" placeholder="Direccion" required>
+                    <input type="text" id="centroTelefono" placeholder="Telefono" required>
+                    <input type="text" id="centroResponsable" placeholder="Responsable" required>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    <th>Categoria</th>
-                    <th>Presentacion</th>
-                    <th>Receta</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="medicamentosTable">
-                <!-- Datos generados dinamicamente -->
-            </tbody>
-        </table>
-    </section>
+                    <button type="submit">Guardar</button>
+                </form>
+
+                <div class="search-container">
+                    <input type="number" id="buscarCentro" placeholder="Buscar por ID">
+                    <button id="btnBuscarCentro">Buscar</button>
+                    <button id="btnCargarCentros">Mostrar Todos</button>
+                    <button id="btnLimpiarCentro" class="secondary-btn">Limpiar</button>
+                </div>
+            </div>
+
+            <div class="table-section">
+                <h2>Listado de Centros</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Direccion</th>
+                                <th>Telefono</th>
+                                <th>Responsable</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="centrosTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="medicamentosSection" class="module-section">
+            <div class="form-section">
+                <h2>Agregar / Actualizar Medicamento</h2>
+
+                <form id="medicamentoForm" class="form-grid">
+                    <input type="text" id="medicamentoNombre" placeholder="Nombre" required>
+                    <input type="text" id="medicamentoDescripcion" placeholder="Descripcion" required>
+
+                    <select id="medicamentoCategoria" required>
+                        <option value="">Seleccione categoria</option>
+                        <option value="Analgesico">Analgesico</option>
+                        <option value="Antibiotico">Antibiotico</option>
+                        <option value="Antialergico">Antialergico</option>
+                    </select>
+
+                    <select id="medicamentoPresentacion" required>
+                        <option value="">Seleccione presentacion</option>
+                        <option value="Tabletas">Tabletas</option>
+                        <option value="Jarabe">Jarabe</option>
+                        <option value="Inyectable">Inyectable</option>
+                    </select>
+
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="medicamentoReceta">
+                        Requiere receta
+                    </label>
+
+                    <button type="submit">Guardar</button>
+                </form>
+
+                <div class="search-container">
+                    <input type="number" id="buscarMedicamento" placeholder="Buscar por ID">
+                    <button id="btnBuscarMedicamento">Buscar</button>
+                    <button id="btnCargarMedicamentos">Mostrar Todos</button>
+                    <button id="btnLimpiarMedicamento" class="secondary-btn">Limpiar</button>
+                </div>
+            </div>
+
+            <div class="table-section">
+                <h2>Listado de Medicamentos</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Categoria</th>
+                                <th>Presentacion</th>
+                                <th>Receta</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="medicamentosTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="donacionesSection" class="module-section">
+            <div class="form-section">
+                <h2>Agregar / Actualizar Donacion</h2>
+
+                <form id="donacionForm" class="form-grid">
+                    <select id="donacionUsuario" data-placeholder="Seleccione usuario" required></select>
+                    <select id="donacionCentro" data-placeholder="Seleccione centro" required></select>
+                    <input type="datetime-local" id="donacionFecha" required>
+
+                    <select id="donacionEstado" required>
+                        <option value="">Seleccione estado</option>
+                        <option value="aprobada">aprobada</option>
+                        <option value="en proceso">en proceso</option>
+                        <option value="denegada">denegada</option>
+                    </select>
+
+                    <button type="submit">Guardar</button>
+                </form>
+
+                <div class="search-container">
+                    <input type="number" id="buscarDonacion" placeholder="Buscar por ID">
+                    <button id="btnBuscarDonacion">Buscar</button>
+                    <button id="btnCargarDonaciones">Mostrar Todos</button>
+                    <button id="btnLimpiarDonacion" class="secondary-btn">Limpiar</button>
+                </div>
+            </div>
+
+            <div class="table-section">
+                <h2>Listado de Donaciones</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Centro</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="donacionesTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="detallesDonacionSection" class="module-section">
+            <div class="form-section">
+                <h2>Agregar / Actualizar Detalle de Donacion</h2>
+
+                <form id="detalleDonacionForm" class="form-grid">
+                    <select id="detalleDonacionDonacion" data-placeholder="Seleccione donacion" required></select>
+                    <select id="detalleDonacionMedicamento" data-placeholder="Seleccione medicamento" required></select>
+                    <input type="number" id="detalleDonacionCantidad" placeholder="Cantidad" min="1" required>
+                    <input type="date" id="detalleDonacionVencimiento" required>
+                    <input type="text" id="detalleDonacionLote" placeholder="Lote" required>
+
+                    <select id="detalleDonacionEstado" required>
+                        <option value="">Seleccione estado</option>
+                        <option value="disponible">disponible</option>
+                        <option value="entregado">entregado</option>
+                        <option value="vencido">vencido</option>
+                        <option value="descartado">descartado</option>
+                    </select>
+
+                    <button type="submit">Guardar</button>
+                </form>
+
+                <div class="search-container">
+                    <input type="number" id="buscarDetalleDonacion" placeholder="Buscar por ID">
+                    <button id="btnBuscarDetalleDonacion">Buscar</button>
+                    <button id="btnCargarDetallesDonacion">Mostrar Todos</button>
+                    <button id="btnLimpiarDetalleDonacion" class="secondary-btn">Limpiar</button>
+                </div>
+            </div>
+
+            <div class="table-section">
+                <h2>Detalles de Donaciones</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Donacion</th>
+                                <th>Medicamento</th>
+                                <th>Cantidad</th>
+                                <th>Vencimiento</th>
+                                <th>Lote</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detallesDonacionTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="solicitudesSection" class="module-section">
+            <div class="form-section">
+                <h2>Agregar / Actualizar Solicitud</h2>
+
+                <form id="solicitudForm" class="form-grid">
+                    <select id="solicitudUsuario" data-placeholder="Seleccione usuario" required></select>
+                    <input type="datetime-local" id="solicitudFecha" required>
+
+                    <select id="solicitudEstado" required>
+                        <option value="">Seleccione estado</option>
+                        <option value="pendiente">pendiente</option>
+                        <option value="aprobada">aprobada</option>
+                        <option value="rechazada">rechazada</option>
+                        <option value="entregada">entregada</option>
+                    </select>
+
+                    <input type="text" id="solicitudObservacion" placeholder="Observacion" required>
+
+                    <button type="submit">Guardar</button>
+                </form>
+
+                <div class="search-container">
+                    <input type="number" id="buscarSolicitud" placeholder="Buscar por ID">
+                    <button id="btnBuscarSolicitud">Buscar</button>
+                    <button id="btnCargarSolicitudes">Mostrar Todos</button>
+                    <button id="btnLimpiarSolicitud" class="secondary-btn">Limpiar</button>
+                </div>
+            </div>
+
+            <div class="table-section">
+                <h2>Listado de Solicitudes</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Observacion</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="solicitudesTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="detallesSolicitudSection" class="module-section">
+            <div class="form-section">
+                <h2>Agregar / Actualizar Detalle de Solicitud</h2>
+
+                <form id="detalleSolicitudForm" class="form-grid">
+                    <select id="detalleSolicitudSolicitud" data-placeholder="Seleccione solicitud" required></select>
+                    <select id="detalleSolicitudMedicamento" data-placeholder="Seleccione medicamento" required></select>
+                    <input type="number" id="detalleSolicitudCantidad" placeholder="Cantidad solicitada" min="1" required>
+                    <input type="number" id="detalleSolicitudAprobada" placeholder="Cantidad aprobada" min="0" required>
+
+                    <button type="submit">Guardar</button>
+                </form>
+
+                <div class="search-container">
+                    <input type="number" id="buscarDetalleSolicitud" placeholder="Buscar por ID">
+                    <button id="btnBuscarDetalleSolicitud">Buscar</button>
+                    <button id="btnCargarDetallesSolicitud">Mostrar Todos</button>
+                    <button id="btnLimpiarDetalleSolicitud" class="secondary-btn">Limpiar</button>
+                </div>
+            </div>
+
+            <div class="table-section">
+                <h2>Detalles de Solicitudes</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Solicitud</th>
+                                <th>Medicamento</th>
+                                <th>Solicitada</th>
+                                <th>Aprobada</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detallesSolicitudTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="entregasSection" class="module-section">
+            <div class="form-section">
+                <h2>Agregar / Actualizar Entrega</h2>
+
+                <form id="entregaForm" class="form-grid">
+                    <select id="entregaSolicitud" data-placeholder="Seleccione solicitud" required></select>
+                    <select id="entregaDetalleDonacion" data-placeholder="Seleccione detalle de donacion" required></select>
+                    <select id="entregaUsuario" data-placeholder="Seleccione usuario" required></select>
+                    <input type="number" id="entregaCantidad" placeholder="Cantidad entregada" min="1" required>
+                    <input type="datetime-local" id="entregaFecha" required>
+
+                    <button type="submit">Guardar</button>
+                </form>
+
+                <div class="search-container">
+                    <input type="number" id="buscarEntrega" placeholder="Buscar por ID">
+                    <button id="btnBuscarEntrega">Buscar</button>
+                    <button id="btnCargarEntregas">Mostrar Todos</button>
+                    <button id="btnLimpiarEntrega" class="secondary-btn">Limpiar</button>
+                </div>
+            </div>
+
+            <div class="table-section">
+                <h2>Listado de Entregas</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Solicitud</th>
+                                <th>Detalle Donacion</th>
+                                <th>Usuario</th>
+                                <th>Cantidad</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="entregasTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <div id="messageBox" class="hidden"></div>
 

@@ -1,74 +1,173 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #f4f6f9;
+    background: #f4f1ec;
+    color: #3d3935;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background: #2d89ef;
+    background: #75665a;
     color: white;
-    padding: 20px;
+    padding: 22px;
     text-align: center;
+    border-bottom: 4px solid #b7aa9c;
 }
 
 h1, h2 {
     margin: 0 0 10px 0;
 }
 
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    color: #5d5148;
+    font-size: 21px;
+}
+
+header p {
+    margin: 0;
+    color: #f2eee8;
+}
+
+.menu {
+    width: 92%;
+    margin: 22px auto 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.menu-btn {
+    background: #e7e1d8;
+    color: #4b433b;
+    border: 1px solid #c9bdae;
+}
+
+.menu-btn:hover, .menu-btn.active {
+    background: #7b6656;
+    color: white;
+}
+
+main {
+    width: 92%;
+    margin: 0 auto 35px auto;
+}
+
+.module-section {
+    display: none;
+}
+
+.active-section {
+    display: block;
+}
+
 .form-section, .table-section {
-    width: 85%;
-    margin: 30px auto;
+    margin: 24px auto;
     background: white;
-    padding: 20px;
+    padding: 22px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(80, 70, 60, 0.12);
+    border: 1px solid #e2d9cf;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+    align-items: center;
 }
 
 form input, form select, .search-container input {
-    width: 24%;
+    width: 100%;
+    box-sizing: border-box;
     padding: 10px;
-    margin: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #cfc6bc;
     border-radius: 6px;
+    background: #fbfaf8;
+    color: #3d3935;
+}
+
+form input:focus, form select:focus, .search-container input:focus {
+    outline: none;
+    border-color: #8a7463;
+    box-shadow: 0 0 0 2px rgba(138, 116, 99, 0.15);
 }
 
 .checkbox-container {
-    display: inline-block;
-    margin: 5px;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #4b433b;
 }
 
 .checkbox-container input {
     width: auto;
 }
 
+.search-container {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) auto auto auto;
+    gap: 10px;
+    margin-top: 18px;
+    align-items: center;
+}
+
 button {
-    padding: 10px 20px;
-    background: #2d89ef;
+    padding: 10px 18px;
+    background: #7b6656;
     color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    min-height: 39px;
 }
 
 button:hover {
-    background: #1b5fbf;
+    background: #5d4e43;
+}
+
+.secondary-btn {
+    background: #8f8b86;
+}
+
+.secondary-btn:hover {
+    background: #6f6a65;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
+    min-width: 780px;
 }
 
 table th, table td {
     padding: 12px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #e6ded6;
     text-align: center;
 }
 
+table th {
+    background: #eee7df;
+    color: #4b433b;
+}
+
+table tr:hover {
+    background: #fbf8f3;
+}
+
 .action-btn {
-    padding: 6px 12px;
+    padding: 7px 12px;
     border-radius: 5px;
     cursor: pointer;
     color: white;
@@ -76,30 +175,58 @@ table th, table td {
 }
 
 .delete-btn {
-    background: #d9534f;
+    background: #b86b5f;
 }
 
 .delete-btn:hover {
-    background: #b52b27;
+    background: #935047;
 }
 
 .edit-btn {
-    background: #5cb85c;
+    background: #7a8a70;
 }
 
 .edit-btn:hover {
-    background: #3d8b3d;
+    background: #5e6d56;
+}
+
+.empty-row {
+    color: #7c746d;
+    font-style: italic;
 }
 
 #messageBox {
-    width: 340px;
-    margin: 20px auto;
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 330px;
     padding: 15px;
     text-align: center;
     border-radius: 6px;
     font-weight: bold;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.18);
 }
 
 .hidden {
     display: none;
+}
+
+@media (max-width: 760px) {
+    main, .menu {
+        width: 94%;
+    }
+
+    .search-container {
+        grid-template-columns: 1fr;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    #messageBox {
+        left: 5%;
+        right: 5%;
+        width: auto;
+    }
 }
