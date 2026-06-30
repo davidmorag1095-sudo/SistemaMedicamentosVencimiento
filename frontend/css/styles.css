@@ -1,17 +1,17 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #f4f1ec;
-    color: #3d3935;
+    background: #eef0f2;
+    color: #303030;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background: #75665a;
-    color: white;
-    padding: 22px;
-    text-align: center;
-    border-bottom: 4px solid #b7aa9c;
+    background: #ffffff;
+    color: #302b27;
+    padding: 26px 4%;
+    text-align: left;
+    border-bottom: 1px solid #d8d2cc;
 }
 
 h1, h2 {
@@ -19,37 +19,47 @@ h1, h2 {
 }
 
 h1 {
-    font-size: 30px;
+    font-size: 31px;
+    font-weight: bold;
 }
 
 h2 {
-    color: #5d5148;
-    font-size: 21px;
+    color: #3c3631;
+    font-size: 20px;
+    border-bottom: 1px solid #e1ddd9;
+    padding-bottom: 10px;
 }
 
 header p {
     margin: 0;
-    color: #f2eee8;
+    color: #6d6965;
 }
 
 .menu {
     width: 92%;
-    margin: 22px auto 0 auto;
+    margin: 20px auto 0 auto;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
+    gap: 6px;
+    justify-content: flex-start;
+    background: #ffffff;
+    padding: 12px;
+    border: 1px solid #d8d2cc;
+    border-radius: 8px;
+    box-sizing: border-box;
 }
 
 .menu-btn {
-    background: #e7e1d8;
-    color: #4b433b;
-    border: 1px solid #c9bdae;
+    background: #f7f7f7;
+    color: #3f3a36;
+    border: 1px solid #d9d5d0;
+    font-size: 14px;
 }
 
 .menu-btn:hover, .menu-btn.active {
-    background: #7b6656;
+    background: #6f5d50;
     color: white;
+    border-color: #6f5d50;
 }
 
 main {
@@ -66,12 +76,12 @@ main {
 }
 
 .form-section, .table-section {
-    margin: 24px auto;
+    margin: 18px auto;
     background: white;
-    padding: 22px;
+    padding: 24px;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(80, 70, 60, 0.12);
-    border: 1px solid #e2d9cf;
+    box-shadow: 0 1px 4px rgba(40, 40, 40, 0.08);
+    border: 1px solid #dedbd7;
 }
 
 .form-grid {
@@ -84,17 +94,18 @@ main {
 form input, form select, .search-container input {
     width: 100%;
     box-sizing: border-box;
-    padding: 10px;
-    border: 1px solid #cfc6bc;
-    border-radius: 6px;
-    background: #fbfaf8;
-    color: #3d3935;
+    padding: 11px;
+    border: 1px solid #c9c5c0;
+    border-radius: 5px;
+    background: #ffffff;
+    color: #303030;
+    font-size: 14px;
 }
 
 form input:focus, form select:focus, .search-container input:focus {
     outline: none;
-    border-color: #8a7463;
-    box-shadow: 0 0 0 2px rgba(138, 116, 99, 0.15);
+    border-color: #6f5d50;
+    box-shadow: 0 0 0 2px rgba(111, 93, 80, 0.16);
 }
 
 .checkbox-container {
@@ -102,7 +113,7 @@ form input:focus, form select:focus, .search-container input:focus {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #4b433b;
+    color: #3f3a36;
 }
 
 .checkbox-container input {
@@ -119,24 +130,25 @@ form input:focus, form select:focus, .search-container input:focus {
 
 button {
     padding: 10px 18px;
-    background: #7b6656;
+    background: #6f5d50;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
     min-height: 39px;
+    font-size: 14px;
 }
 
 button:hover {
-    background: #5d4e43;
+    background: #55473d;
 }
 
 .secondary-btn {
-    background: #8f8b86;
+    background: #727272;
 }
 
 .secondary-btn:hover {
-    background: #6f6a65;
+    background: #585858;
 }
 
 .table-container {
@@ -149,21 +161,23 @@ table {
     border-collapse: collapse;
     margin-top: 15px;
     min-width: 780px;
+    font-size: 14px;
 }
 
 table th, table td {
-    padding: 12px;
-    border-bottom: 1px solid #e6ded6;
-    text-align: center;
+    padding: 11px;
+    border-bottom: 1px solid #e4e4e4;
+    text-align: left;
 }
 
 table th {
-    background: #eee7df;
-    color: #4b433b;
+    background: #f1f1f1;
+    color: #3f3a36;
+    font-weight: bold;
 }
 
 table tr:hover {
-    background: #fbf8f3;
+    background: #faf8f5;
 }
 
 .action-btn {
@@ -175,23 +189,23 @@ table tr:hover {
 }
 
 .delete-btn {
-    background: #b86b5f;
+    background: #a85f56;
 }
 
 .delete-btn:hover {
-    background: #935047;
+    background: #884840;
 }
 
 .edit-btn {
-    background: #7a8a70;
+    background: #697b61;
 }
 
 .edit-btn:hover {
-    background: #5e6d56;
+    background: #53604d;
 }
 
 .empty-row {
-    color: #7c746d;
+    color: #6d6965;
     font-style: italic;
 }
 
@@ -199,12 +213,12 @@ table tr:hover {
     position: fixed;
     right: 24px;
     bottom: 24px;
-    width: 330px;
+    width: 340px;
     padding: 15px;
     text-align: center;
-    border-radius: 6px;
+    border-radius: 5px;
     font-weight: bold;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.16);
 }
 
 .hidden {
