@@ -1,13 +1,5 @@
 from repository.usuario_repository import UsuarioRepository
 
-ROLES_USUARIO = [
-    "Administrador",
-    "Donante",
-    "Solicitante",
-    "Usuario"
-]
-
-
 class UsuarioService:
 
     def __init__(self):
@@ -15,14 +7,19 @@ class UsuarioService:
 #--------------------------------------------------------------------------------------------------------------
 
     def get_roles(self):
-        return ROLES_USUARIO
+        return [
+            "Administrador",
+            "Donante",
+            "Solicitante",
+            "Usuario"
+        ]
 #--------------------------------------------------------------------------------------------------------------
 
     def validar_rol(self, rol):
         if not rol.strip():
             raise ValueError("Debe completar todos los campos")
 
-        if rol not in ROLES_USUARIO:
+        if rol not in self.get_roles():
             raise ValueError("Rol no permitido")
 #--------------------------------------------------------------------------------------------------------------
 

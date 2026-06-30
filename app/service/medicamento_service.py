@@ -1,18 +1,5 @@
 from repository.medicamento_repository import MedicamentoRepository
 
-CATEGORIAS_MEDICAMENTO = [
-    "Analgesico",
-    "Antibiotico",
-    "Antialergico"
-]
-
-PRESENTACIONES_MEDICAMENTO = [
-    "Tabletas",
-    "Jarabe",
-    "Inyectable"
-]
-
-
 class MedicamentoService:
 
     def __init__(self):
@@ -20,21 +7,29 @@ class MedicamentoService:
 #--------------------------------------------------------------------------------------------------------------
 
     def get_categorias(self):
-        return CATEGORIAS_MEDICAMENTO
+        return [
+            "Analgesico",
+            "Antibiotico",
+            "Antialergico"
+        ]
 #--------------------------------------------------------------------------------------------------------------
 
     def get_presentaciones(self):
-        return PRESENTACIONES_MEDICAMENTO
+        return [
+            "Tabletas",
+            "Jarabe",
+            "Inyectable"
+        ]
 #--------------------------------------------------------------------------------------------------------------
 
     def validar_categoria_presentacion(self, categoria, presentacion):
         if not categoria.strip() or not presentacion.strip():
             raise ValueError("Debe completar todos los campos")
 
-        if categoria not in CATEGORIAS_MEDICAMENTO:
+        if categoria not in self.get_categorias():
             raise ValueError("Categoria no permitida")
 
-        if presentacion not in PRESENTACIONES_MEDICAMENTO:
+        if presentacion not in self.get_presentaciones():
             raise ValueError("Presentacion no permitida")
 #--------------------------------------------------------------------------------------------------------------
 

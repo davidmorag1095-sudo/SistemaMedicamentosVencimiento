@@ -1,12 +1,5 @@
 from repository.centro_recepcion_repository import CentroRecepcionRepository
 
-NOMBRES_CENTRO = [
-    "Centro de Salud Central",
-    "Clinica Comunitaria Norte",
-    "Punto de Recepcion Sur"
-]
-
-
 class CentroRecepcionService:
 
     def __init__(self):
@@ -14,14 +7,18 @@ class CentroRecepcionService:
 #--------------------------------------------------------------------------------------------------------------
 
     def get_nombres_centro(self):
-        return NOMBRES_CENTRO
+        return [
+            "Centro de Salud Central",
+            "Clinica Comunitaria Norte",
+            "Punto de Recepcion Sur"
+        ]
 #--------------------------------------------------------------------------------------------------------------
 
     def validar_nombre_centro(self, nombre):
         if not nombre.strip():
             raise ValueError("Debe completar todos los campos")
 
-        if nombre not in NOMBRES_CENTRO:
+        if nombre not in self.get_nombres_centro():
             raise ValueError("Nombre de centro no permitido")
 #--------------------------------------------------------------------------------------------------------------
 

@@ -5,20 +5,6 @@ from repository.donacion_repository import DonacionRepository
 from repository.medicamento_repository import MedicamentoRepository
 from repository.usuario_repository import UsuarioRepository
 
-ESTADOS_DONACION = [
-    "aprobada",
-    "en proceso",
-    "denegada"
-]
-
-ESTADOS_MEDICAMENTO_DONACION = [
-    "disponible",
-    "entregado",
-    "vencido",
-    "descartado"
-]
-
-
 class DonacionService:
 
     def __init__(self):
@@ -29,11 +15,20 @@ class DonacionService:
 #--------------------------------------------------------------------------------------------------------------
 
     def get_estados_donacion(self):
-        return ESTADOS_DONACION
+        return [
+            "aprobada",
+            "en proceso",
+            "denegada"
+        ]
 #--------------------------------------------------------------------------------------------------------------
 
     def get_estados_medicamento(self):
-        return ESTADOS_MEDICAMENTO_DONACION
+        return [
+            "disponible",
+            "entregado",
+            "vencido",
+            "descartado"
+        ]
 #--------------------------------------------------------------------------------------------------------------
 
     def create_donacion(self, id_donacion, id_usuario, id_centro, fecha_donacion, estado):
@@ -101,7 +96,7 @@ class DonacionService:
         if not self.centro_repo.get(id_centro):
             raise ValueError("Centro de recepcion no encontrado")
 
-        if estado not in ESTADOS_DONACION:
+        if estado not in self.get_estados_donacion():
             raise ValueError("Estado de donacion no valido")
 #--------------------------------------------------------------------------------------------------------------
 
@@ -120,6 +115,6 @@ class DonacionService:
         if fecha <= date.today():
             raise ValueError("No se puede registrar un medicamento vencido")
 
-        if estado_medicamento not in ESTADOS_MEDICAMENTO_DONACION:
+        if estado_medicamento not in self.get_estados_medicamento():
             raise ValueError("Estado de medicamento no valido")
 #--------------------------------------------------------------------------------------------------------------

@@ -2,14 +2,6 @@ from repository.medicamento_repository import MedicamentoRepository
 from repository.solicitud_repository import SolicitudRepository
 from repository.usuario_repository import UsuarioRepository
 
-ESTADOS_SOLICITUD = [
-    "pendiente",
-    "aprobada",
-    "rechazada",
-    "entregada"
-]
-
-
 class SolicitudService:
 
     def __init__(self):
@@ -19,7 +11,12 @@ class SolicitudService:
 #--------------------------------------------------------------------------------------------------------------
 
     def get_estados_solicitud(self):
-        return ESTADOS_SOLICITUD
+        return [
+            "pendiente",
+            "aprobada",
+            "rechazada",
+            "entregada"
+        ]
 #--------------------------------------------------------------------------------------------------------------
 
     def create_solicitud(self, id_solicitud, id_usuario, fecha_solicitud, estado, observacion):
@@ -87,7 +84,7 @@ class SolicitudService:
         if not self.usuario_repo.get(id_usuario):
             raise ValueError("Usuario no encontrado")
 
-        if estado not in ESTADOS_SOLICITUD:
+        if estado not in self.get_estados_solicitud():
             raise ValueError("Estado de solicitud no valido")
 #--------------------------------------------------------------------------------------------------------------
 
