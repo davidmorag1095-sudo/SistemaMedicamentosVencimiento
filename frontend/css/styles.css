@@ -1,18 +1,23 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #eef0f2;
-    color: #303030;
+    background: #f4f7f6;
+    color: #263232;
     margin: 0;
-    padding: 0;
+    padding: 112px 0 0 0;
 }
 
 header {
-    background: #ffffff;
-    color: #302b27;
-    padding: 30px 5%;
+    background: #123c3c;
+    color: white;
+    padding: 24px 5%;
     text-align: left;
-    border-bottom: 1px solid #d8d2cc;
-    box-shadow: 0 2px 8px rgba(40, 40, 40, 0.06);
+    border-bottom: 5px solid #27a59a;
+    box-shadow: 0 2px 12px rgba(15, 35, 35, 0.25);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
 }
 
 h1, h2 {
@@ -20,56 +25,60 @@ h1, h2 {
 }
 
 h1 {
-    font-size: 34px;
+    font-size: 32px;
     font-weight: bold;
-    color: #2f2b27;
+    color: white;
 }
 
 h2 {
-    color: #3c3631;
+    color: #173f3f;
     font-size: 20px;
-    border-bottom: 1px solid #d8d2cc;
+    border-bottom: 1px solid #d9e5e2;
     padding-bottom: 12px;
 }
 
 header p {
     margin: 0;
-    color: #6d6965;
+    color: #d6eeea;
     font-size: 15px;
 }
 
 .menu {
-    width: 92%;
-    margin: 22px auto 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: flex-start;
-    background: #ffffff;
-    padding: 14px;
-    border: 1px solid #d8d2cc;
-    border-radius: 6px;
+    width: 245px;
+    margin: 0;
+    display: block;
+    background: #173f3f;
+    padding: 18px;
+    border: none;
+    border-radius: 8px;
     box-sizing: border-box;
-    box-shadow: 0 1px 5px rgba(40, 40, 40, 0.08);
+    box-shadow: 0 4px 14px rgba(15, 35, 35, 0.22);
+    position: fixed;
+    top: 136px;
+    left: 28px;
 }
 
 .menu-btn {
-    background: #f4f2ef;
-    color: #3f3a36;
-    border: 1px solid #d8d2cc;
+    width: 100%;
+    background: #225555;
+    color: #eaf7f5;
+    border: 1px solid #2f6868;
     font-size: 14px;
-    min-height: 38px;
+    min-height: 42px;
+    text-align: left;
+    margin-bottom: 9px;
+    border-radius: 5px;
 }
 
 .menu-btn:hover, .menu-btn.active {
-    background: #6f5d50;
-    color: white;
-    border-color: #6f5d50;
+    background: #27a59a;
+    color: #ffffff;
+    border-color: #27a59a;
 }
 
 main {
-    width: 92%;
-    margin: 22px auto 40px auto;
+    width: auto;
+    margin: 24px 34px 42px 305px;
 }
 
 .module-section {
@@ -84,10 +93,10 @@ main {
     margin: 20px auto;
     background: white;
     padding: 26px;
-    border-radius: 6px;
-    box-shadow: 0 2px 10px rgba(40, 40, 40, 0.08);
-    border: 1px solid #dedbd7;
-    border-left: 5px solid #6f5d50;
+    border-radius: 8px;
+    box-shadow: 0 3px 14px rgba(20, 45, 45, 0.09);
+    border: 1px solid #d9e5e2;
+    border-top: 5px solid #27a59a;
 }
 
 .form-grid {
@@ -102,17 +111,17 @@ form input, form select, .search-container input {
     width: 100%;
     box-sizing: border-box;
     padding: 12px;
-    border: 1px solid #c9c5c0;
+    border: 1px solid #c8d8d5;
     border-radius: 5px;
-    background: #fbfbfb;
-    color: #303030;
+    background: #fbfefe;
+    color: #263232;
     font-size: 14px;
 }
 
 form input:focus, form select:focus, .search-container input:focus {
     outline: none;
-    border-color: #6f5d50;
-    box-shadow: 0 0 0 2px rgba(111, 93, 80, 0.16);
+    border-color: #27a59a;
+    box-shadow: 0 0 0 2px rgba(39, 165, 154, 0.18);
 }
 
 .checkbox-container {
@@ -120,7 +129,7 @@ form input:focus, form select:focus, .search-container input:focus {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #3f3a36;
+    color: #263232;
 }
 
 .checkbox-container input {
@@ -133,15 +142,15 @@ form input:focus, form select:focus, .search-container input:focus {
     gap: 10px;
     margin-top: 22px;
     align-items: center;
-    background: #f4f2ef;
+    background: #eef7f5;
     padding: 14px;
-    border: 1px solid #ddd8d2;
+    border: 1px solid #d4e5e1;
     border-radius: 5px;
 }
 
 button {
     padding: 10px 18px;
-    background: #6f5d50;
+    background: #1f6f68;
     color: white;
     border: none;
     border-radius: 4px;
@@ -152,15 +161,15 @@ button {
 }
 
 button:hover {
-    background: #55473d;
+    background: #15524d;
 }
 
 .secondary-btn {
-    background: #727272;
+    background: #657476;
 }
 
 .secondary-btn:hover {
-    background: #585858;
+    background: #4d595b;
 }
 
 .table-container {
@@ -180,19 +189,19 @@ table {
 
 table th, table td {
     padding: 13px;
-    border-bottom: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e0ece9;
     text-align: left;
 }
 
 table th {
-    background: #f4f2ef;
-    color: #3f3a36;
+    background: #eaf4f2;
+    color: #173f3f;
     font-weight: bold;
-    border-bottom: 2px solid #d8d2cc;
+    border-bottom: 2px solid #c7ddd8;
 }
 
 table tr:hover {
-    background: #faf8f5;
+    background: #f3fbf9;
 }
 
 .action-btn {
@@ -204,23 +213,23 @@ table tr:hover {
 }
 
 .delete-btn {
-    background: #a85f56;
+    background: #b85656;
 }
 
 .delete-btn:hover {
-    background: #884840;
+    background: #963f3f;
 }
 
 .edit-btn {
-    background: #697b61;
+    background: #3f7d58;
 }
 
 .edit-btn:hover {
-    background: #53604d;
+    background: #2f6243;
 }
 
 .empty-row {
-    color: #6d6965;
+    color: #657476;
     font-style: italic;
 }
 
@@ -241,8 +250,34 @@ table tr:hover {
 }
 
 @media (max-width: 760px) {
+    body {
+        padding-top: 0;
+    }
+
+    header {
+        position: static;
+    }
+
     main, .menu {
         width: 94%;
+    }
+
+    .menu {
+        margin: 18px auto 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        position: static;
+    }
+
+    .menu-btn {
+        width: auto;
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    main {
+        margin: 18px auto 35px auto;
     }
 
     .search-container {
